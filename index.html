@@ -21,7 +21,7 @@
         body {
             font-family: 'Arial', sans-serif;
             line-height: 1.6;
-            color: #333;
+            color: #2c2c2c;
             background-color: #f5f5f5;
         }
 
@@ -33,7 +33,7 @@
 
         /* Header */
         header {
-            background: #2c3e50;
+            background: #000;
             padding: 20px 0;
             position: fixed;
             width: 100%;
@@ -68,7 +68,7 @@
         }
 
         .nav-links a:hover {
-            color: #D4AF37;
+            color: #e0e0e0;
         }
 
         .social-links {
@@ -83,7 +83,7 @@
         }
 
         .social-links a:hover {
-            color: #D4AF37;
+            color: #e0e0e0;
         }
 
         /* Hero Section */
@@ -154,12 +154,12 @@
 
         .video-control-btn:hover {
             background: rgba(255, 255, 255, 0.3);
-            border-color: #D4AF37;
+            border-color: #4a4a4a;
         }
 
         .video-control-btn.active {
-            background: #D4AF37;
-            border-color: #D4AF37;
+            background: #4a4a4a;
+            border-color: #4a4a4a;
         }
 
         .hero-content h1 {
@@ -170,7 +170,7 @@
         }
 
         .hero-content .highlight {
-            color: #D4AF37;
+            color: #f8f8f8;
         }
 
         .hero-content p {
@@ -185,19 +185,21 @@
 
         .cta-button {
             display: inline-block;
-            background: #D4AF37;
+            background: #000;
             color: #fff;
             padding: 15px 30px;
             text-decoration: none;
             border-radius: 5px;
             font-weight: bold;
-            transition: background 0.3s;
-            border: none;
+            transition: all 0.3s ease;
+            border: 2px solid #000;
             cursor: pointer;
         }
 
         .cta-button:hover {
-            background: #B8941F;
+            background: #fff;
+            color: #000;
+            border: 2px solid #000;
         }
 
         /* Calendar Section */
@@ -217,12 +219,12 @@
             text-align: center;
             font-size: 1.1rem;
             color: #666;
-            margin-bottom: 50px;
+            margin-bottom: 80px;
         }
 
         .calendar-container {
             background: #fff;
-            border: 2px solid #D4AF37;
+            border: 2px solid #000;
             border-radius: 10px;
             padding: 20px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
@@ -278,7 +280,7 @@
 
         .calendar-lock-overlay h3 {
             font-size: 1.8rem;
-            color: #333;
+            color: #2c2c2c;
             margin-bottom: 15px;
             font-weight: 600;
         }
@@ -294,14 +296,14 @@
             background: #fff;
             padding: 20px;
             border-radius: 10px;
-            border: 2px solid #D4AF37;
+            border: 2px solid #000;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
 
         .lock-message p {
             margin: 0;
             font-size: 1rem;
-            color: #D4AF37;
+            color: #2c2c2c;
             font-weight: 500;
         }
 
@@ -358,7 +360,7 @@
         .stat-number {
             font-size: 2.5rem;
             font-weight: bold;
-            color: #D4AF37;
+            color: #2c2c2c;
         }
 
         .stat-label {
@@ -405,13 +407,13 @@
             }
 
         .service-card:hover {
-            border-color: #D4AF37;
+            border-color: #4a4a4a;
             transform: translateY(-5px);
             box-shadow: 0 15px 40px rgba(0,0,0,0.1);
         }
 
         .service-card.popular {
-            border-color: #D4AF37;
+            border-color: #4a4a4a;
             transform: scale(1.05);
         }
 
@@ -419,7 +421,7 @@
             position: absolute;
             top: -10px;
             right: 20px;
-            background: #D4AF37;
+            background: #4a4a4a;
             color: #fff;
             padding: 5px 15px;
             border-radius: 20px;
@@ -436,7 +438,7 @@
         .service-price {
             font-size: 2rem;
             font-weight: bold;
-            color: #D4AF37;
+            color: #2c2c2c;
             margin-bottom: 20px !important;
         }
 
@@ -457,7 +459,7 @@
         .service-ideal {
             background: #f8f9fa;
             padding: 25px !important;
-            border-left: 4px solid #D4AF37;
+            border-left: 4px solid #4a4a4a;
             margin: 30px 0 !important;
             font-size: 0.9rem;
             color: #555;
@@ -481,7 +483,7 @@
             content: "✓";
             position: absolute;
             left: 0;
-            color: #D4AF37;
+            color: #2c2c2c;
             font-weight: bold;
         }
 
@@ -499,7 +501,7 @@
         }
 
         .service-card.popular .service-button {
-            background: #D4AF37;
+            background: #4a4a4a;
         }
 
         .service-button:hover {
@@ -507,7 +509,7 @@
         }
 
             .service-card.popular .service-button:hover {
-            background: #B8941F;
+            background: #333;
         }
 
         /* Mobile service card expansion */
@@ -520,7 +522,7 @@
             z-index: 1000;
             background: #fff;
             border-radius: 0;
-            padding: 20px;
+            padding: 80px 20px 20px 20px;
             overflow-y: auto;
             transform: none;
             box-shadow: none;
@@ -534,19 +536,24 @@
             display: block;
         }
 
+        .service-card.mobile-expanded h3 {
+            margin-top: 20px;
+        }
+
         .mobile-close-btn {
             position: absolute;
             top: 15px;
             right: 15px;
-            background: #D4AF37;
+            background: #4a4a4a;
             color: #fff;
             border: none;
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            font-size: 20px;
+            width: 35px;
+            height: 35px;
+            font-size: 18px;
             cursor: pointer;
             display: none;
+            z-index: 1001;
         }
 
         .service-card.mobile-expanded .mobile-close-btn {
@@ -699,7 +706,7 @@
         }
 
         .star {
-            color: #D4AF37;
+            color: #2c2c2c;
             font-size: 20px;
         }
 
@@ -721,7 +728,7 @@
             width: 50px;
             height: 50px;
             border-radius: 50%;
-            background: linear-gradient(45deg, #D4AF37, #B8941F);
+            background: linear-gradient(45deg, #4a4a4a, #2c2c2c);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -761,13 +768,13 @@
         }
 
         .payment-card:hover {
-            border-color: #D4AF37;
+            border-color: #4a4a4a;
             transform: translateY(-5px);
             box-shadow: 0 15px 40px rgba(0,0,0,0.1);
         }
 
         .payment-card.popular {
-            border-color: #D4AF37;
+            border-color: #4a4a4a;
             transform: scale(1.05);
         }
 
@@ -779,7 +786,7 @@
             position: absolute;
             top: -10px;
             right: 20px;
-            background: #D4AF37;
+            background: #4a4a4a;
             color: #fff;
             padding: 5px 15px;
             border-radius: 20px;
@@ -796,7 +803,7 @@
         .payment-card .price {
             font-size: 2rem;
             font-weight: bold;
-            color: #D4AF37;
+            color: #2c2c2c;
             margin-bottom: 15px;
         }
 
@@ -807,7 +814,7 @@
         }
 
         .payment-btn {
-            background: #D4AF37;
+            background: #4a4a4a;
             color: #fff;
             padding: 15px 30px;
             border: none;
@@ -820,7 +827,7 @@
         }
 
         .payment-btn:hover {
-            background: #B8941F;
+            background: #333;
             transform: translateY(-2px);
         }
 
@@ -834,7 +841,7 @@
 
         /* Footer */
         footer {
-            background: #2c3e50;
+            background: #000;
             color: #fff;
             padding: 50px 0 30px;
             text-align: center;
@@ -849,19 +856,19 @@
         }
 
         .footer-section h3 {
-            color: #D4AF37;
+            color: #fff;
             margin-bottom: 15px;
         }
 
         .footer-section p, .footer-section a {
-            color: #ccc;
+            color: #fff;
             text-decoration: none;
             margin-bottom: 10px;
             display: block;
         }
 
         .footer-section a:hover {
-            color: #D4AF37;
+            color: #e0e0e0;
         }
 
         .social-icons {
@@ -892,24 +899,27 @@
         }
 
         .instagram {
-            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            background: transparent;
             color: white;
+            border: 1px solid white;
         }
 
         .tiktok {
-            background: linear-gradient(45deg, #000000 0%, #ff0050 50%, #00f2ea 100%);
+            background: transparent;
             color: white;
+            border: 1px solid white;
         }
 
         .whatsapp {
-            background: linear-gradient(45deg, #25d366 0%, #128c7e 100%);
+            background: transparent;
             color: white;
+            border: 1px solid white;
         }
 
         .footer-bottom {
-            border-top: 1px solid #333;
+            border-top: 1px solid #4a4a4a;
             padding-top: 20px;
-            color: #999;
+            color: #fff;
         }
 
         /* Mobile Responsive */
@@ -939,8 +949,39 @@
                 text-align: center;
             }
 
+            .about-text h2 {
+                font-size: 2rem;
+                margin-bottom: 15px;
+            }
+
+            .about-text p {
+                font-size: 1rem;
+                line-height: 1.6;
+                margin-bottom: 15px;
+                text-align: left;
+                padding: 0 10px;
+            }
+
+            .about-image img {
+                max-width: 280px;
+                width: 100%;
+                height: auto;
+                margin: 0 auto;
+                display: block;
+            }
+
             .stats {
                 justify-content: center;
+                gap: 20px;
+                margin-top: 25px;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            .stat-label {
+                font-size: 0.8rem;
             }
 
             .services-grid {
@@ -988,7 +1029,7 @@
             .service-card::after {
                 content: "Ver más detalles";
                 display: block;
-                color: #D4AF37;
+                color: #2c2c2c;
                 font-size: 0.9rem;
                 margin-top: 10px;
                 font-weight: bold;
@@ -1122,6 +1163,37 @@
             .service-card.popular .service-price {
                 font-size: 1.2rem;
                 margin-bottom: 8px;
+            }
+
+            /* Imagen más pequeña en móviles pequeños */
+            .about-image img {
+                max-width: 250px;
+            }
+
+            /* Ajustes de texto para móviles pequeños */
+            .about-text h2 {
+                font-size: 1.8rem;
+                margin-bottom: 12px;
+            }
+
+            .about-text p {
+                font-size: 0.9rem;
+                line-height: 1.5;
+                margin-bottom: 12px;
+                padding: 0 5px;
+            }
+
+            .stats {
+                gap: 15px;
+                margin-top: 20px;
+            }
+
+            .stat-number {
+                font-size: 1.8rem;
+            }
+
+            .stat-label {
+                font-size: 0.75rem;
             }
 
             .calendar-container iframe {
@@ -1259,7 +1331,7 @@
         }
 
         .payment-button {
-            background: #D4AF37;
+            background: #4a4a4a;
             color: #fff;
             padding: 12px 25px;
             border: none;
@@ -1874,7 +1946,7 @@
                         </p>
                         <div style="display: flex; gap: 10px; justify-content: center; margin-top: 20px;">
                             <button id="audioOn" style="
-                                background: #D4AF37; 
+                                background: #4a4a4a; 
                                 color: white; 
                                 border: none; 
                                 padding: 12px 24px; 
@@ -1887,7 +1959,7 @@
                             </button>
                             <button id="audioOff" style="
                                 background: #f0f0f0; 
-                                color: #333; 
+                                color: #2c2c2c; 
                                 border: 2px solid #ddd; 
                                 padding: 12px 24px; 
                                 border-radius: 25px; 
@@ -2001,10 +2073,10 @@
         window.addEventListener('scroll', function() {
             const header = document.querySelector('header');
             if (window.scrollY > 100) {
-                header.style.background = 'rgba(44, 62, 80, 0.95)';
+                header.style.background = 'rgba(0, 0, 0, 0.95)';
                 header.style.backdropFilter = 'blur(10px)';
             } else {
-                header.style.background = '#2c3e50';
+                header.style.background = '#000';
                 header.style.backdropFilter = 'none';
             }
         });
@@ -2167,12 +2239,12 @@
                     
                     // Show blocked message
                     calendarContainer.innerHTML = `
-                        <div style="text-align: center; padding: 40px; background: #f8f9fa; border-radius: 10px; border: 2px solid #D4AF37;">
+                        <div style="text-align: center; padding: 40px; background: #f8f9fa; border-radius: 10px; border: 2px solid #000;">
                             <div style="font-size: 4rem; margin-bottom: 20px;">✅</div>
-                            <h3 style="color: #D4AF37; margin-bottom: 15px;">¡Cita Confirmada!</h3>
+                            <h3 style="color: #000; margin-bottom: 15px;">¡Cita Confirmada!</h3>
                             <p style="color: #666; margin-bottom: 20px;">Tu cita ha sido reservada exitosamente.</p>
                             <p style="color: #999; font-size: 0.9rem; margin-bottom: 20px;">📧 Recibirás un email de confirmación</p>
-                            <div style="background: #e8f4fd; padding: 15px; border-radius: 8px; border-left: 4px solid #D4AF37;">
+                            <div style="background: #e8f4fd; padding: 15px; border-radius: 8px; border-left: 4px solid #000;">
                                 <p style="color: #666; font-size: 0.9rem; margin: 0;">
                                     <strong>💡 Tip:</strong> Si quieres hacer otra reserva, recarga la página (F5)
                                 </p>
@@ -2230,7 +2302,7 @@
                 title: '💳 Procesar Pago',
                 html: `
                     <div style="text-align: center; margin: 20px 0;">
-                        <h3 style="color: #D4AF37; margin-bottom: 20px;">${getServiceName(service)} - $${price} MXN</h3>
+                        <h3 style="color: #000; margin-bottom: 20px;">${getServiceName(service)} - $${price} MXN</h3>
                         <p style="color: #666; margin-bottom: 30px;">Una vez confirmado el pago, podrás seleccionar tu fecha y hora</p>
                         
                         <div style="display: flex; gap: 15px; justify-content: center; margin-top: 30px;">
@@ -2248,16 +2320,16 @@
                                 💳 Pagar con Mercado Pago
                             </button>
                             <button id="paypalBtn" style="
-                                background: #0070BA; 
+                                background: #000; 
                                 color: white; 
-                                border: none; 
+                                border: 2px solid #000; 
                                 padding: 15px 25px; 
                                 border-radius: 25px; 
                                 cursor: pointer;
                                 font-weight: bold;
-                                transition: all 0.3s;
+                                transition: all 0.3s ease;
                                 flex: 1;
-                            " onmouseover="this.style.background='#005EA6'" onmouseout="this.style.background='#0070BA'">
+                            " onmouseover="this.style.background='#fff'; this.style.color='#000'; this.style.border='2px solid #000';" onmouseout="this.style.background='#000'; this.style.color='white'; this.style.border='2px solid #000';">
                                 💰 Pagar con PayPal
                             </button>
                         </div>
@@ -2354,7 +2426,7 @@
                         text: error.message,
                         icon: 'error',
                         confirmButtonText: 'Intentar de Nuevo',
-                        confirmButtonColor: '#D4AF37'
+                        confirmButtonColor: '#000'
                     });
                 } else if (paymentIntent.status === 'succeeded') {
                     Swal.fire({
@@ -2362,7 +2434,7 @@
                         text: 'Tu pago ha sido procesado correctamente. Ahora puedes seleccionar tu fecha y hora.',
                         icon: 'success',
                         confirmButtonText: 'Continuar',
-                        confirmButtonColor: '#D4AF37'
+                        confirmButtonColor: '#000'
                     }).then(() => {
                         showCalendar(service);
                     });
@@ -2397,7 +2469,7 @@
                         paypal.Buttons({
                             style: {
                                 layout: 'vertical',
-                                color: 'gold',
+                                color: 'black',
                                 shape: 'rect',
                                 label: 'paypal'
                             },
@@ -2444,7 +2516,7 @@
                                                 text: 'Tu pago ha sido procesado correctamente. Ahora puedes seleccionar tu fecha y hora.',
                                                 icon: 'success',
                                                 confirmButtonText: 'Continuar',
-                                                confirmButtonColor: '#D4AF37'
+                                                confirmButtonColor: '#000'
                                             }).then(() => {
                                                 showCalendar(service);
                                             });
@@ -2458,7 +2530,7 @@
                                             text: 'Tu pago fue procesado pero hubo un problema guardando los datos. El calendario se desbloqueó de todas formas.',
                                             icon: 'warning',
                                             confirmButtonText: 'Continuar',
-                                            confirmButtonColor: '#D4AF37'
+                                            confirmButtonColor: '#000'
                                         }).then(() => {
                                             showCalendar(service);
                                         });
@@ -2470,7 +2542,7 @@
                                         text: 'Hubo un problema procesando tu pago. Por favor intenta de nuevo.',
                                         icon: 'error',
                                         confirmButtonText: 'OK',
-                                        confirmButtonColor: '#D4AF37'
+                                        confirmButtonColor: '#000'
                                     });
                                 });
                             },
@@ -2481,7 +2553,7 @@
                                     text: `Error: ${err.message || 'Problema con PayPal. Verifica que estés en modo Sandbox si es necesario.'}`,
                                     icon: 'error',
                                     confirmButtonText: 'OK',
-                                    confirmButtonColor: '#D4AF37'
+                                    confirmButtonColor: '#000'
                                 });
                             }
                         }).render('#paypal-button-container');
@@ -2536,14 +2608,14 @@
                 background: #f8f9fa; 
                 border-radius: 10px; 
                 margin-top: 20px;
-                border: 2px solid #D4AF37;
+                border: 2px solid #000;
                 display: block; /* Initially visible */
             `;
             manualConfirmDiv.innerHTML = `
-                <h4 style="color: #D4AF37; margin-bottom: 15px;">¿Ya completaste tu reserva?</h4>
+                <h4 style="color: #000; margin-bottom: 15px;">¿Ya completaste tu reserva?</h4>
                 <p style="color: #666; margin-bottom: 20px; font-size: 14px;">Si ya seleccionaste tu fecha y hora, confirma aquí:</p>
                 <button onclick="handleScheduleEvent()" style="
-                    background: #D4AF37; 
+                    background: #4a4a4a; 
                     color: white; 
                     border: none; 
                     padding: 12px 24px; 
@@ -2804,7 +2876,7 @@
                         text: 'Ya tienes una cita confirmada. Si necesitas cambiarla, contáctanos.',
                         icon: 'warning',
                         confirmButtonText: 'Entendido',
-                        confirmButtonColor: '#D4AF37'
+                        confirmButtonColor: '#000'
                     });
                     
                     // Update localStorage to reflect this
@@ -2819,7 +2891,7 @@
                         text: 'Hubo un problema al guardar tu cita. Por favor contacta al soporte.',
                         icon: 'error',
                         confirmButtonText: 'OK',
-                        confirmButtonColor: '#D4AF37'
+                        confirmButtonColor: '#000'
                     });
                 }
                 window.bookingInProgress = false;
