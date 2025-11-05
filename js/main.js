@@ -1396,3 +1396,23 @@ function handleScheduleEvent() {
         window.bookingInProgress = false;
     });
 }
+
+
+function updateFavicon() {
+    const favicon = document.getElementById('favicon');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+    if (prefersDark) {
+        // Tema oscuro: usar ícono blanco
+        favicon.href = 'img/icon.png';
+    } else {
+        // Tema claro: usar ícono negro
+        favicon.href = 'img/Icon-Dark.png';
+    }
+}
+
+// Actualizar al cargar la página
+updateFavicon();
+
+// Escuchar cambios en el tema del sistema
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateFavicon);
