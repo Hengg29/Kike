@@ -526,39 +526,12 @@ function closeVideoModal() {
     modal.style.display = 'none';
 }
 
-// Payment Modal Functions
-function openPaymentModal(serviceName, price) {
-    const modal = document.getElementById('paymentModal');
-    const serviceInfo = document.getElementById('serviceInfo');
-    serviceInfo.textContent = `${serviceName} - $${price} MXN`;
-    modal.style.display = 'block';
-}
-
-function closePaymentModal() {
-    const modal = document.getElementById('paymentModal');
-    modal.style.display = 'none';
-}
-
-function processPayment() {
-    // Here you would integrate with your payment gateway
-    alert('Redirigiendo a la pasarela de pago...');
-    // In a real implementation, you would:
-    // 1. Validate the form
-    // 2. Send data to your PHP backend
-    // 3. Process payment through gateway (Stripe, PayPal, etc.)
-    // 4. Handle success/error responses
-}
-
 // Close modals when clicking outside
 window.onclick = function(event) {
     const videoModal = document.getElementById('videoModal');
-    const paymentModal = document.getElementById('paymentModal');
     
     if (event.target === videoModal) {
         closeVideoModal();
-    }
-    if (event.target === paymentModal) {
-        closePaymentModal();
     }
 }
 
@@ -665,29 +638,17 @@ function closeMobileServiceCard(card) {
 // Initialize mobile service cards
 document.addEventListener('DOMContentLoaded', initMobileServiceCards);
 
-// Check if user already paid (prevent double payment)
-function checkExistingPayment() {
-    const paymentData = localStorage.getItem('payment_completed');
-    if (paymentData) {
+// Check if user already has a booking
+function checkExistingBooking() {
+    const bookingData = localStorage.getItem('payment_completed');
+    if (bookingData) {
         try {
-            const payment = JSON.parse(paymentData);
-            // Check if payment is recent (within 24 hours)
-            const hoursSincePayment = (Date.now() - payment.timestamp) / (1000 * 60 * 60);
-            if (hoursSincePayment < 24) {
-                // Check if user already has a booking
-                if (payment.hasBooking) {
-                    console.log('🔒 User already has a booking, blocking calendar');
-                    blockCalendarAfterBooking();
-                    return true;
-                } else {
-                    // User paid but no booking yet, unlock calendar
-                    console.log('✅ User paid but no booking yet, unlocking calendar');
-                    showCalendar(payment.service);
-                    return true;
-                }
-            } else {
-                // Payment is old, remove it
-                localStorage.removeItem('payment_completed');
+            const booking = JSON.parse(bookingData);
+            // Check if user already has a booking
+            if (booking.hasBooking) {
+                console.log('🔒 User already has a booking, blocking calendar');
+                blockCalendarAfterBooking();
+                return true;
             }
         } catch (e) {
             localStorage.removeItem('payment_completed');
@@ -696,20 +657,12 @@ function checkExistingPayment() {
     return false;
 }
 
-// Check payment on page load
+// Check booking on page load
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('🔍 Page loaded, checking payment status...');
+    console.log('🔍 Page loaded, checking booking status...');
     
-    // Debug: Show localStorage data
-    const paymentData = localStorage.getItem('payment_completed');
-    if (paymentData) {
-        console.log('💾 Payment data in localStorage:', JSON.parse(paymentData));
-    } else {
-        console.log('❌ No payment data in localStorage');
-    }
-    
-    if (checkExistingPayment()) {
-        console.log('✅ Payment status checked');
+    if (checkExistingBooking()) {
+        console.log('✅ Booking status checked');
     }
     
     // Page loaded successfully
@@ -756,121 +709,44 @@ function blockCalendarAfterBooking() {
 
 // Scroll to payment section
 function goToCalendly(service) {
-    console.log('🎯 Scrolling to payment section for service:', service);
+    // Guardar el servicio seleccionado
+    selectedService = service;
+    
+    // Ir directo a Calendly
+    goToCalendlyDirect(service);
+}
+
+function goToCalendlyDirect(service) {
+    console.log('🎯 Mostrando Calendly para servicio:', service);
     
     // Guardar el servicio seleccionado
     selectedService = service;
     
-    // Hacer scroll suave hacia la sección de pago (que está más abajo)
-    const paymentSection = document.getElementById('reservar');
-    if (paymentSection) {
-        paymentSection.scrollIntoView({ 
+    // Hacer scroll suave hacia la sección de reserva
+    const reservaSection = document.getElementById('reservar');
+    if (reservaSection) {
+        reservaSection.scrollIntoView({ 
             behavior: 'smooth', 
             block: 'start' 
         });
     }
+    
+    // Mostrar el calendario directamente con el servicio correcto
+    setTimeout(() => {
+        showCalendar(service);
+    }, 500);
 }
 
-// Payment and Service Selection - FUNCTIONAL
+// Service Selection - FUNCTIONAL
 let selectedService = null;
 let selectedPrice = null;
-let stripe = null;
-let paypalButtons = null;
-
-// Initialize Stripe (replace with your publishable key)
-const STRIPE_PUBLISHABLE_KEY = 'pk_test_your_stripe_publishable_key_here';
-
-// Initialize payment systems
-document.addEventListener('DOMContentLoaded', function() {
-    // Initialize Stripe
-    if (typeof Stripe !== 'undefined') {
-        stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
-    }
-});
 
 function selectService(service, price) {
     selectedService = service;
     selectedPrice = price;
     
-    // Show payment modal
-    showPaymentModal(service, price);
-}
-
-function showPaymentModal(service, price) {
-    Swal.fire({
-        title: '💳 Procesar Pago',
-        html: `
-            <div style="text-align: center; margin: 20px 0;">
-                <h3 style="color: #000; margin-bottom: 20px;">${getServiceName(service)} - $${price} MXN</h3>
-                <p style="color: #666; margin-bottom: 30px;">Una vez confirmado el pago, podrás seleccionar tu fecha y hora</p>
-                
-                <div style="display: flex; gap: 15px; justify-content: center; margin-top: 30px;">
-                    <button id="mercadopagoBtn" style="
-                        background: #00A1F1; 
-                        color: white; 
-                        border: none; 
-                        padding: 15px 25px; 
-                        border-radius: 25px; 
-                        cursor: pointer;
-                        font-weight: bold;
-                        transition: all 0.3s;
-                        flex: 1;
-                    " onmouseover="this.style.background='#0088CC'" onmouseout="this.style.background='#00A1F1'">
-                        💳 Pagar con Mercado Pago
-                    </button>
-                    <button id="paypalBtn" style="
-                        background: #000; 
-                        color: white; 
-                        border: 2px solid #000; 
-                        padding: 15px 25px; 
-                        border-radius: 25px; 
-                        cursor: pointer;
-                        font-weight: bold;
-                        transition: all 0.3s ease;
-                        flex: 1;
-                    " onmouseover="this.style.background='#fff'; this.style.color='#000'; this.style.border='2px solid #000';" onmouseout="this.style.background='#000'; this.style.color='white'; this.style.border='2px solid #000';">
-                        💰 Pagar con PayPal
-                    </button>
-                </div>
-                
-                <div style="margin-top: 20px; padding: 15px; background: #f8f8f8; border-radius: 10px;">
-                    <p style="font-size: 14px; color: #666; margin: 0;">
-                        🔒 Pago 100% seguro • Recibirás confirmación por email
-                    </p>
-                </div>
-            </div>
-        `,
-        showConfirmButton: false,
-        showCancelButton: true,
-        cancelButtonText: 'Cancelar',
-        allowOutsideClick: false,
-        customClass: {
-            popup: 'swal-payment-popup'
-        },
-        didOpen: () => {
-            // Add custom styles
-            const style = document.createElement('style');
-            style.textContent = `
-                .swal-payment-popup {
-                    border-radius: 20px !important;
-                    box-shadow: 0 20px 60px rgba(0,0,0,0.3) !important;
-                }
-                .swal2-popup {
-                    padding: 30px !important;
-                }
-            `;
-            document.head.appendChild(style);
-            
-            // Handle payment buttons
-            document.getElementById('mercadopagoBtn').addEventListener('click', () => {
-                processMercadoPagoPayment(service, price);
-            });
-            
-            document.getElementById('paypalBtn').addEventListener('click', () => {
-                processPayPalPayment(service, price);
-            });
-        }
-    });
+    // Ir directo a Calendly - el pago se maneja ahí
+    goToCalendlyDirect(service);
 }
 
 function getServiceName(service) {
@@ -880,201 +756,6 @@ function getServiceName(service) {
         'asesoria-online': 'Asesoría de Visagismo en Línea'
     };
     return names[service] || 'Servicio';
-}
-
-// MERCADO PAGO PAYMENT - FUNCTIONAL
-async function processMercadoPagoPayment(service, price) {
-    try {
-        // Show loading
-        Swal.fire({
-            title: '⏳ Procesando con Stripe...',
-            text: 'Redirigiendo a Stripe para completar el pago',
-            allowOutsideClick: false,
-            showConfirmButton: false,
-            didOpen: () => {
-                Swal.showLoading();
-            }
-        });
-
-        // Create payment intent on your backend
-        const response = await fetch('/create-payment-intent', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                service: service,
-                amount: price * 100, // Convert to cents
-                currency: 'mxn'
-            })
-        });
-
-        const { clientSecret } = await response.json();
-
-        // Confirm payment with Stripe
-        const { error, paymentIntent } = await stripe.confirmPayment({
-            clientSecret: clientSecret,
-            confirmParams: {
-                return_url: window.location.href + '#success'
-            }
-        });
-
-        if (error) {
-            Swal.fire({
-                title: '❌ Error en el Pago',
-                text: error.message,
-                icon: 'error',
-                confirmButtonText: 'Intentar de Nuevo',
-                confirmButtonColor: '#000'
-            });
-        } else if (paymentIntent.status === 'succeeded') {
-            Swal.fire({
-                title: '✅ ¡Pago Exitoso!',
-                text: 'Tu pago ha sido procesado correctamente. Ahora puedes seleccionar tu fecha y hora.',
-                icon: 'success',
-                confirmButtonText: 'Continuar',
-                confirmButtonColor: '#000'
-            }).then(() => {
-                showCalendar(service);
-            });
-        }
-    } catch (error) {
-        console.error('Error:', error);
-        Swal.fire({
-            title: '❌ Error',
-            text: 'Hubo un problema procesando el pago. Por favor intenta de nuevo.',
-            icon: 'error',
-            confirmButtonText: 'OK',
-            confirmButtonColor: '#D4AF37'
-        });
-    }
-}
-
-// PAYPAL PAYMENT - FUNCTIONAL
-function processPayPalPayment(service, price) {
-    Swal.fire({
-        title: '💰 PayPal',
-        html: `
-            <div id="paypal-button-container" style="margin: 20px 0;"></div>
-        `,
-        showConfirmButton: false,
-        showCancelButton: true,
-        cancelButtonText: 'Cancelar',
-        allowOutsideClick: false,
-        didOpen: () => {
-            // Wait for PayPal SDK to load
-            const checkPayPal = () => {
-                if (typeof paypal !== 'undefined') {
-                paypal.Buttons({
-                    style: {
-                        layout: 'vertical',
-                        color: 'black',
-                        shape: 'rect',
-                        label: 'paypal'
-                    },
-                    createOrder: function(data, actions) {
-                        return actions.order.create({
-                            purchase_units: [{
-                                amount: {
-                                    value: price.toString(),
-                                    currency_code: 'MXN'
-                                },
-                                description: getServiceName(service)
-                            }]
-                        });
-                    },
-                    onApprove: function(data, actions) {
-                        return actions.order.capture().then(function(details) {
-                            // Guardar pago en base de datos
-                            fetch('/apis/save-payment.php', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                },
-                                body: JSON.stringify({
-                                    service: service,
-                                    price: price,
-                                    payment_id: details.id,
-                                    payer_email: details.payer.email_address,
-                                    status: 'completed'
-                                })
-                            }).then(response => response.json())
-                            .then(data => {
-                                if (data.success) {
-                                    // Guardar en localStorage para persistencia
-                                    localStorage.setItem('payment_completed', JSON.stringify({
-                                        service: service,
-                                        price: price,
-                                        payment_id: details.id,
-                                        payer_email: details.payer.email_address,
-                                        timestamp: Date.now(),
-                                    }));
-                                    
-                                    Swal.fire({
-                                        title: '✅ ¡Pago Exitoso!',
-                                        text: 'Tu pago ha sido procesado correctamente. Ahora puedes seleccionar tu fecha y hora.',
-                                        icon: 'success',
-                                        confirmButtonText: 'Continuar',
-                                        confirmButtonColor: '#000'
-                                    }).then(() => {
-                                        showCalendar(service);
-                                    });
-                                } else {
-                                    throw new Error('Failed to save payment');
-                                }
-                            }).catch(error => {
-                                console.error('Error saving payment:', error);
-                                Swal.fire({
-                                    title: '⚠️ Pago Exitoso pero con Advertencia',
-                                    text: 'Tu pago fue procesado pero hubo un problema guardando los datos. El calendario se desbloqueó de todas formas.',
-                                    icon: 'warning',
-                                    confirmButtonText: 'Continuar',
-                                    confirmButtonColor: '#000'
-                                }).then(() => {
-                                    showCalendar(service);
-                                });
-                            });
-                        }).catch(function(error) {
-                            console.error('❌ PayPal capture error:', error);
-                            Swal.fire({
-                                title: '❌ Error en el Pago',
-                                text: 'Hubo un problema procesando tu pago. Por favor intenta de nuevo.',
-                                icon: 'error',
-                                confirmButtonText: 'OK',
-                                confirmButtonColor: '#000'
-                            });
-                        });
-                    },
-                    onError: function(err) {
-                        console.error('PayPal Error:', err);
-                        Swal.fire({
-                            title: '❌ Error en el Pago',
-                            text: `Error: ${err.message || 'Problema con PayPal. Verifica que estés en modo Sandbox si es necesario.'}`,
-                            icon: 'error',
-                            confirmButtonText: 'OK',
-                            confirmButtonColor: '#000'
-                        });
-                    }
-                }).render('#paypal-button-container');
-                } else {
-                    console.log('PayPal SDK not ready, retrying...');
-                    setTimeout(checkPayPal, 500);
-                }
-            };
-            
-            // Start checking
-            checkPayPal();
-            
-            // Fallback after 5 seconds
-            setTimeout(() => {
-                if (typeof paypal === 'undefined') {
-                    console.error('PayPal SDK not loaded after timeout');
-                    document.getElementById('paypal-button-container').innerHTML = 
-                        '<p style="color: #666;">PayPal SDK no se cargó correctamente. Recarga la página e intenta de nuevo.</p>';
-                }
-            }, 5000);
-        }
-    });
 }
 
 function showCalendar(service) {
@@ -1092,40 +773,11 @@ function showCalendar(service) {
     // Set different Calendly URLs based on service
     const calendlyUrls = {
         'corte': 'https://calendly.com/alexander-hernandez-iest/corte-de-cabello-visagismo',
-        'asesoria': 'https://calendly.com/alexander-hernandez-iest/corte-asesoria-visagismo',
-        'completo': 'https://calendly.com/alexander-hernandez-iest/corte-asesoria-visagismo'
+        'asesoria-presencial': 'https://calendly.com/alexander-hernandez-iest/corte-asesoria-visagismo',
+        'asesoria-online': 'https://calendly.com/alexander-hernandez-iest/corte-asesoria-visagismo'
     };
     
     iframe.src = calendlyUrls[service] || calendlyUrls['corte'];
-    
-    // Add manual confirmation button (initially visible)
-    const manualConfirmDiv = document.createElement('div');
-    manualConfirmDiv.id = 'manualConfirmDiv';
-    manualConfirmDiv.style.cssText = `
-        text-align: center; 
-        padding: 20px; 
-        background: #f8f9fa; 
-        border-radius: 10px; 
-        margin-top: 20px;
-        border: 2px solid #000;
-        display: block; /* Initially visible */
-    `;
-    manualConfirmDiv.innerHTML = `
-        <h4 style="color: #000; margin-bottom: 15px;">¿Ya completaste tu reserva?</h4>
-        <p style="color: #666; margin-bottom: 20px; font-size: 14px;">Si ya seleccionaste tu fecha y hora, confirma aquí:</p>
-        <button onclick="handleScheduleEvent()" style="
-            background: #4a4a4a; 
-            color: white; 
-            border: none; 
-            padding: 12px 24px; 
-            border-radius: 25px; 
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 16px;
-        ">✅ Confirmar Mi Reserva</button>
-    `;
-    
-    calendarContainer.appendChild(manualConfirmDiv);
     
     // Scroll to calendar
     calendarContainer.scrollIntoView({ behavior: 'smooth' });
@@ -1269,10 +921,6 @@ function handleScheduleEvent() {
     console.log('🎊 SCHEDULE EVENT CLICKED! Processing reservation...');
     
     // Hide manual button immediately
-    const manualDiv = document.getElementById('manualConfirmDiv');
-    if (manualDiv) {
-        manualDiv.style.display = 'none';
-    }
     
     // Check if already processing to prevent duplicates
     if (window.bookingInProgress) {
@@ -1345,10 +993,6 @@ function handleScheduleEvent() {
         localStorage.setItem('payment_completed', JSON.stringify(updatedPayment));
         
         // Hide manual confirmation button
-        const manualConfirmDiv = document.getElementById('manualConfirmDiv');
-        if (manualConfirmDiv) {
-            manualConfirmDiv.style.display = 'none';
-        }
         
         // Show success message
         Swal.fire({
