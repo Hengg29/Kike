@@ -412,7 +412,7 @@ nav {
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 30px;
     margin-top: 50px;
-    align-items: start;
+    align-items: stretch;
    
 }
 
@@ -425,8 +425,54 @@ nav {
         transition: all 0.3s;
         position: relative;
         cursor: pointer;
-        height: auto;
-        
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        max-height: 700px;
+        overflow: hidden;
+    }
+    
+    .service-card.popular {
+        padding-top: 30px !important;
+        overflow: visible;
+    }
+    
+    .service-card-content {
+        flex: 1;
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding: 0 10px;
+        scrollbar-width: thin;
+        scrollbar-color: #bdc3c7 #f8f9fa;
+        text-align: left;
+    }
+    
+    .service-card-content > * {
+        text-align: left;
+    }
+    
+    .service-card h3,
+    .service-card .service-price,
+    .service-card .service-duration {
+        text-align: center !important;
+    }
+    
+    .service-card-content::-webkit-scrollbar {
+        width: 6px;
+    }
+    
+    .service-card-content::-webkit-scrollbar-track {
+        background: #f8f9fa;
+        border-radius: 10px;
+    }
+    
+    .service-card-content::-webkit-scrollbar-thumb {
+        background: #bdc3c7;
+        border-radius: 10px;
+    }
+    
+    .service-card-content::-webkit-scrollbar-thumb:hover {
+        background: #4a4a4a;
     }
 
 .service-card:hover {
@@ -437,12 +483,12 @@ nav {
 
 .service-card.popular {
     border-color: #4a4a4a;
-    transform: scale(1.05);
+
 }
 
 .popular-badge {
     position: absolute;
-    top: -10px;
+    top: -12px;
     right: 20px;
     background: #4a4a4a;
     color: #fff;
@@ -450,6 +496,8 @@ nav {
     border-radius: 20px;
     font-size: 0.8rem;
     font-weight: bold;
+    z-index: 10;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
 .service-card h3 {
@@ -477,6 +525,8 @@ nav {
     margin-bottom: 30px !important;
     line-height: 1.7;
     padding: 0 15px !important;
+    text-align: left;
+    text-align-last: left;
 }
 
 .service-ideal {
@@ -487,27 +537,34 @@ nav {
     font-size: 0.9rem;
     color: #555;
     border-radius: 0 5px 5px 0;
+    text-align: left;
+    text-align-last: left;
 }
 
 .service-features {
     list-style: none;
     margin-bottom: 35px !important;
-    padding: 0 15px !important;
+    padding: 0;
 }
 
 .service-features li {
-    padding: 12px 0 !important;
+    margin-bottom: 1rem;
     color: #666;
     position: relative;
-    padding-left: 25px;
+    padding-left: 50px;
+    text-align: left;
+    text-align-last: left;
 }
 
 .service-features li:before {
     content: "✓";
     position: absolute;
-    left: 0;
+    left: 5px;
     color: #2c2c2c;
     font-weight: bold;
+    font-size: 1.1em;
+    width: 20px;
+    text-align: center;
 }
 
 .service-button {
@@ -520,7 +577,9 @@ nav {
     font-weight: bold;
     transition: all 0.3s;
     width: 100%;
-    margin-top: 20px !important;
+    margin-top: auto;
+    margin-bottom: 0 !important;
+    flex-shrink: 0;
 }
 
 .service-card.popular .service-button {
@@ -931,7 +990,7 @@ nav {
 
 .popular-badge {
     position: absolute;
-    top: -10px;
+    top: -12px;
     right: 20px;
     background: #4a4a4a;
     color: #fff;
@@ -939,6 +998,8 @@ nav {
     border-radius: 20px;
     font-size: 0.8rem;
     font-weight: bold;
+    z-index: 10;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
 .payment-card h3 {
