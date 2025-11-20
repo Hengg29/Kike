@@ -675,36 +675,42 @@ nav {
 
 .carousel-container {
     position: relative;
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 50px auto 0;
     overflow: hidden;
     width: 100%;
+    padding: 0 20px;
 }
 
 .carousel-wrapper {
     display: flex;
     transition: transform 0.5s ease-in-out;
+    gap: 20px;
+    will-change: transform;
 }
 
 .carousel-slide {
-    min-width: 100%;
+    min-width: calc(33.333% - 14px);
+    max-width: calc(33.333% - 14px);
+    width: calc(33.333% - 14px);
     display: flex;
-    gap: 30px;
-    padding: 0 20px;
+    justify-content: center;
+    align-items: center;
+    padding: 0 10px;
     box-sizing: border-box;
-    align-items: flex-start;
+    flex-shrink: 0;
 }
 
 .before-after-item {
-    flex: 1;
     background: #fff;
     border-radius: 10px;
-    overflow: visible;
+    overflow: hidden;
     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
     transition: transform 0.3s ease;
     display: flex;
     flex-direction: column;
     width: 100%;
+    margin: 0;
 }
 
 .before-after-item:hover {
@@ -712,7 +718,35 @@ nav {
     box-shadow: 0 15px 40px rgba(0,0,0,0.15);
 }
 
-.before-after-item img {
+.before-after-item:hover .before-after-badge.antes {
+    display: none !important;
+}
+
+.before-after-item:hover .before-after-badge.despues {
+    display: inline-block !important;
+}
+
+.before-after-item:hover .image-before {
+    opacity: 0;
+}
+
+.before-after-item:hover .image-after {
+    opacity: 1;
+}
+
+.image-container {
+    position: relative;
+    width: 100%;
+    height: auto;
+    background: #f5f5f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+}
+
+.image-before,
+.image-after {
     width: 100%;
     height: auto;
     max-height: 600px;
@@ -720,6 +754,29 @@ nav {
     object-position: center;
     background: #f5f5f5;
     display: block;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.image-before {
+    opacity: 1;
+    position: relative;
+    z-index: 1;
+}
+
+.image-after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    z-index: 2;
+}
+
+.before-after-item .before-after-badge.despues {
+    display: none !important;
+}
+
+.before-after-item .before-after-badge.antes {
+    display: inline-block !important;
 }
 
 .before-after-content {
@@ -1360,19 +1417,28 @@ footer {
     }
 
     .carousel-slide {
+        min-width: 100%;
+        max-width: 100%;
+        width: 100%;
         flex-direction: column;
         gap: 20px;
         padding: 0 10px;
+        justify-content: center;
     }
 
     .before-after-item {
         max-width: 100%;
         margin: 0 auto;
         width: 100%;
-        overflow: visible;
+        overflow: hidden;
     }
 
-    .before-after-item img {
+    .image-container {
+        width: 100%;
+    }
+
+    .image-before,
+    .image-after {
         width: 100%;
         height: auto;
         max-height: 500px;
@@ -1682,7 +1748,18 @@ footer {
         font-size: 1.6rem;
     }
 
-    .before-after-item img {
+    .carousel-slide {
+        min-width: calc(50% - 10px);
+        max-width: calc(50% - 10px);
+        width: calc(50% - 10px);
+    }
+
+    .image-container {
+        width: 100%;
+    }
+
+    .image-before,
+    .image-after {
         width: 100%;
         height: auto;
         max-height: 550px;
@@ -1695,29 +1772,35 @@ footer {
 /* Desktop Styles - Optimized for vertical images */
 @media (min-width: 1025px) {
     .carousel-container {
-        max-width: 1000px;
+        max-width: 1400px;
     }
 
     .carousel-slide {
-        gap: 30px;
-        padding: 0 20px;
+        min-width: calc(33.333% - 14px);
+        max-width: calc(33.333% - 14px);
+        width: calc(33.333% - 14px);
+        padding: 0 10px;
+        justify-content: center;
     }
 
     .before-after-item {
-        max-width: 380px;
-        margin: 0 auto;
+        max-width: 100%;
+        margin: 0;
         background: #fff;
         box-shadow: 0 8px 25px rgba(0,0,0,0.08);
     }
 
-    .before-after-item img {
+    .image-container {
+        width: 100%;
+    }
+
+    .image-before,
+    .image-after {
         max-height: 650px;
         width: 100%;
         height: auto;
         object-fit: contain;
         background: #f8f8f8;
-        padding: 10px;
-        box-sizing: border-box;
     }
 
     .before-after-content {
