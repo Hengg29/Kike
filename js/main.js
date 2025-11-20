@@ -356,28 +356,31 @@ function showAudioRecommendation() {
 
 function displayAudioAlert() {
     Swal.fire({
-        title: '🎵 ¡Mejora tu Experiencia!',
+        title: 'Activar audio',
         html: `
-            <div style="text-align: center; margin: 20px 0;">
-                <p style="color: #666; font-size: 16px; margin-bottom: 20px;">
-                    Te recomendamos activar el audio para disfrutar de la mejor experiencia mientras navegas por nuestro sitio.
-                </p>
-                <p style="color: #999; font-size: 14px;">
-                    Puedes activarlo en cualquier momento usando el botón 🔊 en el video.
+            <div style="text-align: left; margin: 25px 0; padding: 0 10px;">
+                <p style="color: #2c2c2c; font-size: 15px; line-height: 1.6; margin: 0;">
+                    Para mejorar tu experiencia en el sitio, puedes activar el audio opcionalmente. Puedes desactivarlo o activarlo cuando quieras desde el video.
                 </p>
             </div>
         `,
-        icon: 'info',
+        showIcon: false,
         showCancelButton: true,
-        confirmButtonText: 'Activar Audio',
-        cancelButtonText: 'Continuar sin Audio',
-        confirmButtonColor: '#5D6532',
-        cancelButtonColor: '#666',
+        confirmButtonText: 'Activar audio',
+        cancelButtonText: 'Continuar sin audio',
+        confirmButtonColor: '#000',
+        cancelButtonColor: '#fff',
+        cancelButtonTextColor: '#000',
+        buttonsStyling: true,
         allowOutsideClick: true,
         allowEscapeKey: true,
-        backdrop: true,
+        backdrop: 'rgba(0, 0, 0, 0.5)',
         customClass: {
-            popup: 'audio-recommendation-popup'
+            popup: 'audio-recommendation-popup',
+            title: 'audio-title',
+            htmlContainer: 'audio-content',
+            confirmButton: 'audio-confirm-btn',
+            cancelButton: 'audio-cancel-btn'
         }
     }).then((result) => {
         const video = document.getElementById('heroVideoElement');
