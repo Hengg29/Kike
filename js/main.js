@@ -451,7 +451,7 @@ function displayAudioAlert() {
         html: `
             <div class="audio-content" style="padding:0; display:flex; flex-direction:column; align-items:center;">
                 <div class="audio-icon">🎵</div>
-                <p class="audio-text">Para una experiencia completa, activa el audio del video. Puedes desactivarlo cuando quieras.</p>
+                <p class="audio-text">Para una mejor experiencia, activa el audio del video. Puedes desactivarlo cuando lo desees.</p>
             </div>
         `,
         showIcon: false,
@@ -664,17 +664,17 @@ function initHeroTextAnimation() {
         // Add the animation class to start the animation
         heroTextContainer.classList.add('video-playing');
         
-        // After text animation completes (11.5 seconds), expand the button
+        // After text animation completes (7.5 seconds), expand the button
         buttonExpandTimeout = setTimeout(() => {
             if (ctaButton) {
                 ctaButton.classList.add('expanded');
             }
             buttonExpandTimeout = null;
-        }, 11500); // 11.5 seconds = when text fade out completes
+        }, 7500); // 7.5 seconds = when text fade out completes
     }
 
     let lastAnimationTime = 0;
-    const ANIMATION_COOLDOWN = 12000; // 12 seconds cooldown to prevent rapid re-triggers
+    const ANIMATION_COOLDOWN = 8000; // 8 seconds cooldown to prevent rapid re-triggers
     
     function handleVideoPlay() {
         const now = Date.now();

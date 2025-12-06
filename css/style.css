@@ -304,17 +304,17 @@ nav {
 
 /* Animation for text visibility on video play */
 .hero-text-container.video-playing {
-    animation: textFadeInOut 11.5s ease-in-out forwards;
+    animation: textFadeInOut 7.5s ease-in-out forwards;
 }
 
 @keyframes textFadeInOut {
     0% {
         opacity: 0;
     }
-    4.35% {
+    6.67% {
         opacity: 1;
     }
-    91.3% {
+    86.67% {
         opacity: 1;
     }
     100% {
