@@ -29,13 +29,27 @@
     <!-- Hero Section -->
     <section id="inicio" class="hero">
         <div class="hero-video" id="heroVideo">
+            <!-- Video Desktop -->
             <video 
                 id="heroVideoElement"
+                class="hero-video-desktop"
                 muted 
                 loop 
                 playsinline
                 preload="auto">
-                <source src="video/videoKike.mp4" type="video/mp4">
+                <source src="video/horizontal.mp4" type="video/mp4">
+                Tu navegador no soporta videos HTML5.
+            </video>
+            
+            <!-- Video Mobile -->
+            <video 
+                id="heroVideoElementMobile"
+                class="hero-video-mobile"
+                muted 
+                loop 
+                playsinline
+                preload="auto">
+                <source src="video/vertical.mp4" type="video/mp4">
                 Tu navegador no soporta videos HTML5.
             </video>
         </div>

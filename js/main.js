@@ -1,3 +1,11 @@
+// Asegurar que el botón flotante esté oculto al inicio
+document.addEventListener('DOMContentLoaded', () => {
+    const muteBtnFloating = document.getElementById('muteBtnFloating');
+    if (muteBtnFloating) {
+        muteBtnFloating.classList.remove('visible');
+    }
+});
+
  // Smooth scrolling for navigation links
  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
@@ -333,41 +341,48 @@ let isPlaying = false;
 
 // Mostrar SweetAlert recomendando activar el audio
 function showAudioRecommendation() {
-    const video = document.getElementById('heroVideoElement');
+    const videoDesktop = document.getElementById('heroVideoElement');
+    const videoMobile = document.getElementById('heroVideoElementMobile');
     
-    if (video) {
-        // Esperar a que el video esté listo o mostrar después de un pequeño delay
-        if (video.readyState >= 2) {
+    // Verificar si alguno de los videos está listo
+    if (videoDesktop || videoMobile) {
+        if ((videoDesktop && videoDesktop.readyState >= 2) || (videoMobile && videoMobile.readyState >= 2)) {
             displayAudioAlert();
         } else {
-            video.addEventListener('loadeddata', displayAudioAlert, { once: true });
-            // Fallback: mostrar después de 1 segundo si el video no carga
+            if (videoDesktop) {
+                videoDesktop.addEventListener('loadeddata', displayAudioAlert, { once: true });
+            }
+            if (videoMobile) {
+                videoMobile.addEventListener('loadeddata', displayAudioAlert, { once: true });
+            }
+            // Fallback: mostrar después de 1 segundo si los videos no cargan
             setTimeout(() => {
-                if (video.readyState < 2) {
+                if ((videoDesktop && videoDesktop.readyState < 2) && (videoMobile && videoMobile.readyState < 2)) {
                     displayAudioAlert();
                 }
             }, 1000);
         }
     } else {
-        // Si el video no existe, mostrar después de un pequeño delay
+        // Si los videos no existen, mostrar después de un pequeño delay
         setTimeout(displayAudioAlert, 500);
     }
 }
 
 function displayAudioAlert() {
     Swal.fire({
-        title: 'Activar audio',
+        title: '🔊 Activar Audio',
         html: `
-            <div style="text-align: left; margin: 25px 0; padding: 0 10px;">
-                <p style="color: #2c2c2c; font-size: 15px; line-height: 1.6; margin: 0;">
-                    Para mejorar tu experiencia en el sitio, puedes activar el audio opcionalmente. Puedes desactivarlo o activarlo cuando quieras desde el video.
+            <div style="text-align: center; margin: 20px 0; padding: 0;">
+                <div style="font-size: 48px; margin-bottom: 20px; animation: pulse 2s infinite;">🎵</div>
+                <p style="color: #555; font-size: 15px; line-height: 1.8; margin: 0; font-weight: 500;">
+                    Para una experiencia completa, activa el audio del video. Puedes desactivarlo cuando quieras.
                 </p>
             </div>
         `,
         showIcon: false,
         showCancelButton: true,
-        confirmButtonText: 'Activar audio',
-        cancelButtonText: 'Continuar sin audio',
+        confirmButtonText: '✓ Activar Audio',
+        cancelButtonText: '✕ Continuar Sin Audio',
         confirmButtonColor: '#000',
         cancelButtonColor: '#fff',
         cancelButtonTextColor: '#000',
@@ -383,14 +398,16 @@ function displayAudioAlert() {
             cancelButton: 'audio-cancel-btn'
         }
     }).then((result) => {
-        const video = document.getElementById('heroVideoElement');
         const muteBtn = document.getElementById('muteBtn');
         const playBtn = document.getElementById('playBtn');
         
-        if (result.isConfirmed && video) {
-            // Activar audio y poner en play
-            video.muted = false;
-            video.play().catch(e => console.log('Error al reproducir:', e));
+        if (result.isConfirmed) {
+            // Activar audio y poner en play solo en el video visible
+            const visibleVideo = getVisibleVideo();
+            if (visibleVideo) {
+                visibleVideo.muted = false;
+                visibleVideo.play().catch(e => console.log('Error al reproducir:', e));
+            }
             isMuted = false;
             isPlaying = true;
             
@@ -423,37 +440,54 @@ if (document.readyState === 'loading') {
     setTimeout(showAudioRecommendation, 800);
 }
 
+// Helper: Obtener el video visible según el tamaño de pantalla
+function getVisibleVideo() {
+    const videoDesktop = document.getElementById('heroVideoElement');
+    const videoMobile = document.getElementById('heroVideoElementMobile');
+    const isMobileView = window.innerWidth <= 1024;
+    
+    return isMobileView ? videoMobile : videoDesktop;
+}
+
+// Helper: Obtener ambos videos
+function getBothVideos() {
+    return {
+        desktop: document.getElementById('heroVideoElement'),
+        mobile: document.getElementById('heroVideoElementMobile')
+    };
+}
+
 function toggleMute() {
-    const video = document.getElementById('heroVideoElement');
+    const videos = getBothVideos();
     const muteBtn = document.getElementById('muteBtn');
     const muteBtnFloating = document.getElementById('muteBtnFloating');
     
-    if (video) {
-        if (isMuted) {
-            // Cambiar a con audio
-            video.muted = false;
-            if (muteBtn) {
-                muteBtn.textContent = '🔊';
-                muteBtn.classList.add('active');
-            }
-            if (muteBtnFloating) {
-                muteBtnFloating.textContent = '🔊';
-                muteBtnFloating.classList.add('active');
-            }
-            isMuted = false;
-        } else {
-            // Cambiar a sin audio
-            video.muted = true;
-            if (muteBtn) {
-                muteBtn.textContent = '🔇';
-                muteBtn.classList.remove('active');
-            }
-            if (muteBtnFloating) {
-                muteBtnFloating.textContent = '🔇';
-                muteBtnFloating.classList.remove('active');
-            }
-            isMuted = true;
+    // Silenciar/dessilenciar solo el video visible
+    const visibleVideo = getVisibleVideo();
+    if (visibleVideo) visibleVideo.muted = !isMuted;
+    
+    if (isMuted) {
+        // Cambiar a con audio
+        if (muteBtn) {
+            muteBtn.textContent = '🔊';
+            muteBtn.classList.add('active');
         }
+        if (muteBtnFloating) {
+            muteBtnFloating.textContent = '🔊';
+            muteBtnFloating.classList.add('active');
+        }
+        isMuted = false;
+    } else {
+        // Cambiar a sin audio
+        if (muteBtn) {
+            muteBtn.textContent = '🔇';
+            muteBtn.classList.remove('active');
+        }
+        if (muteBtnFloating) {
+            muteBtnFloating.textContent = '🔇';
+            muteBtnFloating.classList.remove('active');
+        }
+        isMuted = true;
     }
 }
 
@@ -483,8 +517,9 @@ function handleScroll() {
     if (muteBtnFloating && heroSection) {
         const heroBottom = heroSection.offsetTop + heroSection.offsetHeight;
         
-        // Mostrar botón flotante cuando se hace scroll pasado el hero
-        if (scrollTop > heroBottom - 100) {
+        // Mostrar botón flotante solo cuando el hero haya pasado completamente
+        // (cuando el scroll es mayor al final del hero)
+        if (scrollTop > heroBottom) {
             muteBtnFloating.classList.add('visible');
             updateFloatingMuteButton();
         } else {
@@ -498,33 +533,28 @@ function handleScroll() {
 // Agregar event listener para scroll
 window.addEventListener('scroll', handleScroll, { passive: true });
 
-// Inicializar estado del botón flotante
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-        updateFloatingMuteButton();
-    });
-} else {
-    updateFloatingMuteButton();
-}
-
 function togglePlay() {
-    const video = document.getElementById('heroVideoElement');
     const playBtn = document.getElementById('playBtn');
     
-    if (video) {
-        if (isPlaying) {
-            // Pausar video
-            video.pause();
+    // Reproducir/pausar solo el video visible
+    const visibleVideo = getVisibleVideo();
+    
+    if (isPlaying) {
+        // Pausar video
+        if (visibleVideo) visibleVideo.pause();
+        if (playBtn) {
             playBtn.textContent = '▶️';
             playBtn.classList.remove('active');
-            isPlaying = false;
-        } else {
-            // Reproducir video
-            video.play();
+        }
+        isPlaying = false;
+    } else {
+        // Reproducir video
+        if (visibleVideo) visibleVideo.play();
+        if (playBtn) {
             playBtn.textContent = '⏸️';
             playBtn.classList.add('active');
-            isPlaying = true;
         }
+        isPlaying = true;
     }
 }
 
