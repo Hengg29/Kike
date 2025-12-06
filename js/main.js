@@ -633,6 +633,106 @@ function togglePlay() {
     }
 }
 
+// Hero text animation on video play
+function initHeroTextAnimation() {
+    const heroTextContainer = document.querySelector('.hero-text-container');
+    if (!heroTextContainer) return;
+
+    const videoDesktop = document.getElementById('heroVideoElement');
+    const videoMobile = document.getElementById('heroVideoElementMobile');
+    
+    let buttonExpandTimeout = null;
+    
+    function triggerTextAnimation() {
+        const ctaButton = document.querySelector('.cta-button');
+        
+        // Clear any pending button expansion timeout
+        if (buttonExpandTimeout) {
+            clearTimeout(buttonExpandTimeout);
+            buttonExpandTimeout = null;
+        }
+        
+        // Remove any existing animation classes to restart animation
+        heroTextContainer.classList.remove('video-playing');
+        if (ctaButton) {
+            ctaButton.classList.remove('expanded');
+        }
+        
+        // Force a reflow to ensure the class removal is processed
+        void heroTextContainer.offsetWidth;
+        
+        // Add the animation class to start the animation
+        heroTextContainer.classList.add('video-playing');
+        
+        // After text animation completes (11.5 seconds), expand the button
+        buttonExpandTimeout = setTimeout(() => {
+            if (ctaButton) {
+                ctaButton.classList.add('expanded');
+            }
+            buttonExpandTimeout = null;
+        }, 11500); // 11.5 seconds = when text fade out completes
+    }
+
+    let lastAnimationTime = 0;
+    const ANIMATION_COOLDOWN = 12000; // 12 seconds cooldown to prevent rapid re-triggers
+    
+    function handleVideoPlay() {
+        const now = Date.now();
+        // Prevent triggering animation if it was triggered recently
+        if (now - lastAnimationTime < ANIMATION_COOLDOWN) {
+            return;
+        }
+        
+        // Small delay to ensure video is actually playing
+        setTimeout(() => {
+            triggerTextAnimation();
+            lastAnimationTime = Date.now();
+        }, 50);
+    }
+
+    // Listen for play events on both videos
+    if (videoDesktop) {
+        videoDesktop.addEventListener('play', handleVideoPlay);
+        videoDesktop.addEventListener('playing', handleVideoPlay);
+    }
+    
+    if (videoMobile) {
+        videoMobile.addEventListener('play', handleVideoPlay);
+        videoMobile.addEventListener('playing', handleVideoPlay);
+    }
+
+    // Check if video is already playing when page loads
+    function checkInitialVideoState() {
+        const visibleVideo = getVisibleVideo();
+        if (visibleVideo && !visibleVideo.paused && visibleVideo.readyState >= 2) {
+            handleVideoPlay();
+        }
+    }
+
+    // Check after a short delay to allow videos to load
+    setTimeout(checkInitialVideoState, 500);
+    
+    // Also check when videos are loaded
+    if (videoDesktop) {
+        videoDesktop.addEventListener('loadeddata', () => {
+            setTimeout(checkInitialVideoState, 200);
+        }, { once: true });
+    }
+    
+    if (videoMobile) {
+        videoMobile.addEventListener('loadeddata', () => {
+            setTimeout(checkInitialVideoState, 200);
+        }, { once: true });
+    }
+}
+
+// Initialize text animation when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initHeroTextAnimation);
+} else {
+    initHeroTextAnimation();
+}
+
 // Video Modal Functions
 function openVideoModal(videoUrl) {
     // Mostrar notificación elegante preguntando sobre el audio

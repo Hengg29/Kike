@@ -269,6 +269,7 @@ nav {
     margin-bottom: 20px;
     color: #fff;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    font-family: 'Aleo', serif;
 }
 
 .hero-content .highlight {
@@ -283,6 +284,42 @@ nav {
     max-width: 600px;
     margin-left: auto;
     margin-right: auto;
+    font-family: 'Aleo', serif;
+}
+
+/* Hero text container for animation */
+.hero-text-container {
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.hero-text-container.show {
+    opacity: 1;
+}
+
+.hero-text-container.fade-out {
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+}
+
+/* Animation for text visibility on video play */
+.hero-text-container.video-playing {
+    animation: textFadeInOut 11.5s ease-in-out forwards;
+}
+
+@keyframes textFadeInOut {
+    0% {
+        opacity: 0;
+    }
+    4.35% {
+        opacity: 1;
+    }
+    91.3% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
 }
 
 .cta-button {
@@ -293,7 +330,8 @@ nav {
     text-decoration: none;
     border-radius: 5px;
     font-weight: bold;
-    transition: all 0.3s ease;
+    font-size: 1rem;
+    transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
     border: 2px solid #000;
     cursor: pointer;
 }
@@ -302,6 +340,31 @@ nav {
     background: #fff;
     color: #000;
     border: 2px solid #000;
+}
+
+/* CTA Button expansion animation after text fades */
+.cta-button.expanded {
+    padding: 20px 45px;
+    font-size: 1.15rem;
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive button expansion for tablets and mobile */
+@media (max-width: 768px) {
+    .cta-button.expanded {
+        padding: 16px 35px;
+        font-size: 1.05rem;
+        transform: scale(1.03);
+    }
+}
+
+@media (max-width: 480px) {
+    .cta-button.expanded {
+        padding: 14px 28px;
+        font-size: 1rem;
+        transform: scale(1.02);
+    }
 }
 
 /* Calendar Section */
