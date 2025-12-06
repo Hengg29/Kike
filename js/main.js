@@ -1,11 +1,3 @@
-// Asegurar que el botón flotante esté oculto al inicio
-document.addEventListener('DOMContentLoaded', () => {
-    const muteBtnFloating = document.getElementById('muteBtnFloating');
-    if (muteBtnFloating) {
-        muteBtnFloating.classList.remove('visible');
-    }
-});
-
  // Smooth scrolling for navigation links
  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
@@ -17,6 +9,110 @@ document.addEventListener('DOMContentLoaded', () => {
                 block: 'start'
             });
         }
+    });
+});
+
+// Auto-dim hero text so it doesn't block video subtitles.
+document.addEventListener('DOMContentLoaded', () => {
+    const hero = document.querySelector('.hero');
+    const heroContent = document.querySelector('.hero-content');
+    if (!hero || !heroContent) return;
+
+    // Respect user preference for reduced motion
+    const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) return;
+
+    // Use IntersectionObserver: when hero is visible, dim the text (so subtitles are readable).
+    const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && entry.intersectionRatio > 0.4) {
+                // hero visible -> dim text
+                heroContent.classList.add('dimmed');
+            } else {
+                // hero not visible -> show text
+                heroContent.classList.remove('dimmed');
+            }
+        });
+    }, { threshold: [0, 0.4, 0.6, 1] });
+
+    io.observe(hero);
+
+    // Reveal when the cursor is near the center of the hero (not just hover anywhere)
+    let heroVisible = false;
+    let rafId = null;
+    let revealRadius = 150; // will be recalculated
+
+    function recomputeRadius() {
+        const rect = hero.getBoundingClientRect();
+        // Reduce activation zone to ~12% of the smaller side so it is much smaller
+        // (previously ~22%) — this prevents the text from reappearing too easily.
+        revealRadius = Math.min(rect.width, rect.height) * 0.12;
+    }
+
+    // Update heroVisible from IO above
+    const io2 = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            heroVisible = entry.isIntersecting && entry.intersectionRatio > 0.4;
+            // if hero not visible, ensure content is visible
+            if (!heroVisible) heroContent.classList.remove('dimmed');
+            else heroContent.classList.add('dimmed');
+        });
+    }, { threshold: [0, 0.4, 0.6, 1] });
+    io2.observe(hero);
+
+    function handlePointer(event) {
+        if (!heroVisible) return; // only active when hero is visible (we dim by default)
+
+        const rect = hero.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        const x = event.clientX;
+        const y = event.clientY;
+        const dx = x - cx;
+        const dy = y - cy;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+
+        const near = dist <= revealRadius;
+        if (near) {
+            heroContent.classList.remove('dimmed');
+        } else {
+            heroContent.classList.add('dimmed');
+        }
+    }
+
+    function onMouseMove(e) {
+        if (rafId) cancelAnimationFrame(rafId);
+        rafId = requestAnimationFrame(() => handlePointer(e));
+    }
+
+    // Recompute radius on resize/scroll
+    window.addEventListener('resize', recomputeRadius);
+    window.addEventListener('orientationchange', recomputeRadius);
+    window.addEventListener('scroll', () => { if (heroVisible) recomputeRadius(); }, { passive: true });
+
+    recomputeRadius();
+    hero.addEventListener('mousemove', onMouseMove);
+
+    // Touch interactions: show on touch, re-dim after
+    let touchTimeout = null;
+    hero.addEventListener('touchstart', () => {
+        heroContent.classList.remove('dimmed');
+        clearTimeout(touchTimeout);
+    }, { passive: true });
+    hero.addEventListener('touchend', () => {
+        clearTimeout(touchTimeout);
+        touchTimeout = setTimeout(() => {
+            if (heroVisible) heroContent.classList.add('dimmed');
+        }, 1200);
+    }, { passive: true });
+
+    // If user taps the content, keep visible for a bit longer
+    heroContent.addEventListener('click', () => {
+        heroContent.classList.remove('dimmed');
+        clearTimeout(touchTimeout);
+        touchTimeout = setTimeout(() => {
+            if (heroVisible) heroContent.classList.add('dimmed');
+        }, 4000);
     });
 });
 
