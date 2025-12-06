@@ -73,86 +73,7 @@
             <h2 class="section-title">Agenda tu Cita</h2>
             <p class="section-subtitle">Selecciona tu servicio y agenda tu cita</p>
             
-            <!-- Payment Selection Cards -->
-            <div class="payment-selection">
-                <div class="payment-card" onclick="selectService('corte', 499); return false;">
-                    <h3>Corte de Cabello</h3>
-                    <div class="price">$499 MXN</div>
-                    <p>El pago se procesará en Calendly</p>
-                    <button class="payment-btn" onclick="selectService('corte', 499); return false;">Seleccionar</button>
-                </div>
-                
-                <div class="payment-card" onclick="selectService('asesoria-presencial', 799); return false;">
-                    <h3>Asesoría Presencial</h3>
-                    <div class="price">$799 MXN</div>
-                    <p>El pago se procesará en Calendly</p>
-                    <button class="payment-btn" onclick="selectService('asesoria-presencial', 799); return false;">Seleccionar</button>
-                </div>
-                
-                <div class="payment-card" onclick="selectService('asesoria-online', 1599); return false;">
-                    <h3>Asesoría Online</h3>
-                    <div class="price">$1,599 MXN</div>
-                    <p>El pago se procesará en Calendly</p>
-                    <button class="payment-btn" onclick="selectService('asesoria-online', 1599); return false;">Seleccionar</button>
-                </div>
-            </div>
-            
-            <!-- Locked Calendar (shown with lock) -->
-            <div class="calendar-container locked" id="calendarContainer">
-                <div class="calendar-lock-overlay">
-                    <div class="lock-icon">🔒</div>
-                    <h3>Calendario Bloqueado</h3>
-                    <p>Selecciona un servicio para continuar</p>
-                    <div class="lock-message">
-                        <p>📅 Selecciona un servicio arriba para agendar tu cita</p>
-                    </div>
-                </div>
-                <div class="calendar-scroll-wrapper" style="display: none;">
-                    <iframe id="calendlyIframe" src="" title="Reservar cita - Calendly"></iframe>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="sobre-mi" class="about">
-        <div class="container">
-            <div class="about-content">
-                <div class="about-text">
-                    <h2>Sobre Enrique Garza</h2>
-                    <p>Soy Enrique Garza Morales, barbero y visagista especializado en el público masculino, creando estilos que se adaptan a la esencia, proporciones y momento de vida de cada persona.</p>
-                    <p>He estudiado con maestros de talla internacional en España, Londres, Los Ángeles, Denver, Monterrey, Chile y Brasil, además de contar con una maestría en estética capilar, diagnósticos y tratamientos por Escneca (España).</p>
-                    <p>Mi diferencia está en aplicar técnicas internacionales con un enfoque en visagismo, lo que permite lograr cortes con estructura, equilibrio y propósito, más allá de solo cambiar el cabello. Mi agenda suele llenarse con uno o dos meses de anticipación, y he aparecido en medios como Chic Magazine y prensa local por ser pionero en llevar el visagismo a Tampico.</p>
-                    <p>Mi objetivo es que cada asesoría te brinde seguridad, confianza y claridad sobre tu imagen, para que logres proyectar exactamente lo que quieres en tu vida personal y profesional.</p>
-                    
-                    <div class="stats">
-                        <div class="stat">
-                            <div class="stat-number">5</div>
-                            <div class="stat-label">Años de Experiencia</div>
-                        </div>
-                        <div class="stat">
-                            <div class="stat-number">10,000+</div>
-                            <div class="stat-label">Clientes Satisfechos</div>
-                        </div>
-                        <div class="stat">
-                            <div class="stat-number">100%</div>
-                            <div class="stat-label">Satisfacción</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="about-image">
-                    <img src="img/kikeguapo.jpeg" alt="Enrique Garza">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Services Section -->
-    <section id="servicios" class="services">
-        <div class="container">
-            <h2 class="section-title">Servicios Profesionales</h2>
-            <p class="section-subtitle">Elige el servicio que mejor se adapte a tus necesidades</p>
-            
+            <!-- Services grid (moved here to replace the simple payment cards) -->
             <div class="services-grid">
                 <!-- Service 1 -->
                 <div class="service-card">
@@ -210,8 +131,76 @@
                     <button class="service-button" onclick="goToCalendly('asesoria-online')">Reservar Ahora</button>
                 </div>
             </div>
+            
+            <!-- Locked Calendar (shown with lock) -->
+            <div class="calendar-container locked" id="calendarContainer">
+                <div class="calendar-lock-overlay">
+                    <div class="lock-icon">🔒</div>
+                    <h3>Calendario Bloqueado</h3>
+                    <p>Selecciona un servicio para continuar</p>
+                    <div class="lock-message">
+                        <p>📅 Selecciona un servicio arriba para agendar tu cita</p>
+                        <!-- No inline controls here; footer switcher appears only after user opens Calendly -->
+                    </div>
+                
+                    <!-- Footer controls removed; use calendar footer switcher instead -->
+                </div>
+                <div class="calendar-scroll-wrapper" style="display: none;">
+                    <iframe id="calendlyIframe" src="" title="Reservar cita - Calendly"></iframe>
+                </div>
+                <!-- Service switcher shown when calendar is unlocked -->
+                <div id="calendarServiceSwitcher" class="calendar-service-switcher" style="display:none;">
+                    <label for="changeServiceSelectFooter" class="change-service-label">Cambiar paquete:</label>
+                    <div class="change-service-controls">
+                        <select id="changeServiceSelectFooter" class="change-service-select">
+                            <option value="corte">Corte de Cabello - $499</option>
+                            <option value="asesoria-presencial">Asesoría Presencial - $799</option>
+                            <option value="asesoria-online">Asesoría Online - $1,599</option>
+                        </select>
+                        <div class="change-service-buttons">
+                            <button id="changeServiceBtnFooter" onclick="changeServiceFromFooter()" class="btn-primary">Cambiar</button>
+                            <button id="closeCalendarBtn" onclick="closeCalendarSwitcher()" class="btn-secondary">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
+
+    <!-- About Section -->
+    <section id="sobre-mi" class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>Sobre Enrique Garza</h2>
+                    <p>Soy Enrique Garza Morales, barbero y visagista especializado en el público masculino, creando estilos que se adaptan a la esencia, proporciones y momento de vida de cada persona.</p>
+                    <p>He estudiado con maestros de talla internacional en España, Londres, Los Ángeles, Denver, Monterrey, Chile y Brasil, además de contar con una maestría en estética capilar, diagnósticos y tratamientos por Escneca (España).</p>
+                    <p>Mi diferencia está en aplicar técnicas internacionales con un enfoque en visagismo, lo que permite lograr cortes con estructura, equilibrio y propósito, más allá de solo cambiar el cabello. Mi agenda suele llenarse con uno o dos meses de anticipación, y he aparecido en medios como Chic Magazine y prensa local por ser pionero en llevar el visagismo a Tampico.</p>
+                    <p>Mi objetivo es que cada asesoría te brinde seguridad, confianza y claridad sobre tu imagen, para que logres proyectar exactamente lo que quieres en tu vida personal y profesional.</p>
+                    
+                    <div class="stats">
+                        <div class="stat">
+                            <div class="stat-number">5</div>
+                            <div class="stat-label">Años de Experiencia</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">10,000+</div>
+                            <div class="stat-label">Clientes Satisfechos</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">100%</div>
+                            <div class="stat-label">Satisfacción</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <img src="img/kikeguapo.jpeg" alt="Enrique Garza">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services moved up to the reservation section. Original section removed. -->
 
     <!-- Before After Section -->
     <section id="resultados" class="before-after">

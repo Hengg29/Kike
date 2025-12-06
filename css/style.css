@@ -174,16 +174,17 @@ nav {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* Dimmed state: leaves video readable (subtítulos) */
+/* Note: Hero dimming/proximity behavior removed per user preference. */
+/* Restore a simple dimmed state so hero text doesn't block video subtitles.
+   Text will be dimmed when the hero is visible; hovering or proximity reveals it. */
 .hero-content.dimmed {
     opacity: 0.14 !important;
     transform: translateY(-6px) !important;
-    /* keep pointer events so user can still interact when needed */
     pointer-events: auto !important;
     filter: saturate(0.9);
 }
 
-/* If user hovers/taps the hero, show full text again */
+/* If user hovers/focuses the hero, show full text again */
 .hero:hover .hero-content.dimmed,
 .hero:focus-within .hero-content.dimmed {
     opacity: 1 !important;
@@ -416,6 +417,101 @@ nav {
     border-color: #4a4a4a;
     box-shadow: 0 10px 30px rgba(0,0,0,0.12);
     transform: translateY(-2px);
+}
+
+/* Change-service footer inside the calendar overlay */
+.change-service-footer {
+    width: 100%;
+    max-width: 880px;
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(0,0,0,0.04);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.change-service-label {
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 8px;
+}
+.change-service-controls {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+.change-service-select {
+    width: 100%;
+    max-width: 380px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    background: #fff;
+    font-size: 15px;
+    color: #222;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
+.change-service-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 4px;
+}
+.btn-primary {
+    background: linear-gradient(90deg, #262626, #111);
+    color: #fff;
+    padding: 10px 16px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+.btn-secondary {
+    background: #fff;
+    color: #111;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+}
+
+@media (min-width: 700px) {
+    .change-service-controls { flex-direction: row; align-items: center; }
+    .change-service-select { margin-right: 12px; margin-bottom: 0; }
+    .change-service-label { display: none; }
+}
+
+/* Calendar service switcher (shown under iframe when unlocked) */
+.calendar-service-switcher {
+    margin: 18px auto 0;
+    width: 100%;
+    max-width: 980px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 18px;
+    border-radius: 12px;
+}
+.calendar-service-switcher.visible {
+    display: flex !important;
+    opacity: 1;
+}
+.calendar-service-switcher[hidden] {
+    display: none !important;
+    opacity: 0;
+}
+.calendar-service-switcher .change-service-controls {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+}
+@media (min-width:700px) {
+    .calendar-service-switcher { flex-direction: row; padding: 14px; }
+    .calendar-service-switcher .change-service-label { display: block; margin-right: 8px; }
 }
 
 .lock-message p {

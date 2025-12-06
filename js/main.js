@@ -12,7 +12,7 @@
     });
 });
 
-// Auto-dim hero text so it doesn't block video subtitles.
+// Restore simple hero dimming: dim text while hero is visible to avoid blocking subtitles.
 document.addEventListener('DOMContentLoaded', () => {
     const hero = document.querySelector('.hero');
     const heroContent = document.querySelector('.hero-content');
@@ -22,47 +22,30 @@ document.addEventListener('DOMContentLoaded', () => {
     const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReduced) return;
 
-    // Use IntersectionObserver: when hero is visible, dim the text (so subtitles are readable).
+    let heroVisible = false;
+    let rafId = null;
+    let touchTimeout = null;
+    let revealRadius = 150;
+
+    function recomputeRadius() {
+        const rect = hero.getBoundingClientRect();
+        revealRadius = Math.min(rect.width, rect.height) * 0.12;
+    }
+
     const io = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-            if (entry.isIntersecting && entry.intersectionRatio > 0.4) {
-                // hero visible -> dim text
+            heroVisible = entry.isIntersecting && entry.intersectionRatio > 0.4;
+            if (heroVisible) {
                 heroContent.classList.add('dimmed');
             } else {
-                // hero not visible -> show text
                 heroContent.classList.remove('dimmed');
             }
         });
     }, { threshold: [0, 0.4, 0.6, 1] });
-
     io.observe(hero);
 
-    // Reveal when the cursor is near the center of the hero (not just hover anywhere)
-    let heroVisible = false;
-    let rafId = null;
-    let revealRadius = 150; // will be recalculated
-
-    function recomputeRadius() {
-        const rect = hero.getBoundingClientRect();
-        // Reduce activation zone to ~12% of the smaller side so it is much smaller
-        // (previously ~22%) — this prevents the text from reappearing too easily.
-        revealRadius = Math.min(rect.width, rect.height) * 0.12;
-    }
-
-    // Update heroVisible from IO above
-    const io2 = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            heroVisible = entry.isIntersecting && entry.intersectionRatio > 0.4;
-            // if hero not visible, ensure content is visible
-            if (!heroVisible) heroContent.classList.remove('dimmed');
-            else heroContent.classList.add('dimmed');
-        });
-    }, { threshold: [0, 0.4, 0.6, 1] });
-    io2.observe(hero);
-
     function handlePointer(event) {
-        if (!heroVisible) return; // only active when hero is visible (we dim by default)
-
+        if (!heroVisible) return;
         const rect = hero.getBoundingClientRect();
         const cx = rect.left + rect.width / 2;
         const cy = rect.top + rect.height / 2;
@@ -72,8 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const dy = y - cy;
         const dist = Math.sqrt(dx*dx + dy*dy);
 
-        const near = dist <= revealRadius;
-        if (near) {
+        if (dist <= revealRadius) {
             heroContent.classList.remove('dimmed');
         } else {
             heroContent.classList.add('dimmed');
@@ -85,16 +67,12 @@ document.addEventListener('DOMContentLoaded', () => {
         rafId = requestAnimationFrame(() => handlePointer(e));
     }
 
-    // Recompute radius on resize/scroll
     window.addEventListener('resize', recomputeRadius);
     window.addEventListener('orientationchange', recomputeRadius);
-    window.addEventListener('scroll', () => { if (heroVisible) recomputeRadius(); }, { passive: true });
-
     recomputeRadius();
     hero.addEventListener('mousemove', onMouseMove);
 
-    // Touch interactions: show on touch, re-dim after
-    let touchTimeout = null;
+    // Touch interactions: show on touch, re-dim after a short timeout
     hero.addEventListener('touchstart', () => {
         heroContent.classList.remove('dimmed');
         clearTimeout(touchTimeout);
@@ -115,6 +93,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 4000);
     });
 });
+
+// Experimental hero-dimming/proximity logic removed per user request.
+// Keep hero content static; we only control video playback and the audio alert.
 
 // FAQ Toggle
 function toggleFAQ(element) {
@@ -468,11 +449,9 @@ function displayAudioAlert() {
     Swal.fire({
         title: '🔊 Activar Audio',
         html: `
-            <div style="text-align: center; margin: 20px 0; padding: 0;">
-                <div style="font-size: 48px; margin-bottom: 20px; animation: pulse 2s infinite;">🎵</div>
-                <p style="color: #555; font-size: 15px; line-height: 1.8; margin: 0; font-weight: 500;">
-                    Para una experiencia completa, activa el audio del video. Puedes desactivarlo cuando quieras.
-                </p>
+            <div class="audio-content" style="padding:0; display:flex; flex-direction:column; align-items:center;">
+                <div class="audio-icon">🎵</div>
+                <p class="audio-text">Para una experiencia completa, activa el audio del video. Puedes desactivarlo cuando quieras.</p>
             </div>
         `,
         showIcon: false,
@@ -980,37 +959,88 @@ function getServiceName(service) {
 }
 
 function showCalendar(service) {
-    // Hide payment selection
-    document.querySelector('.payment-selection').style.display = 'none';
-    
-    // Unlock calendar
+    // Hide payment selection or services grid (whichever exists)
+    const paymentSelection = document.querySelector('.payment-selection');
+    const servicesGrid = document.querySelector('.services-grid');
+    if (paymentSelection) paymentSelection.style.display = 'none';
+    if (servicesGrid) servicesGrid.style.display = 'none';
+
+    // Unlock calendar container and show iframe
     const calendarContainer = document.getElementById('calendarContainer');
     const iframe = document.getElementById('calendlyIframe');
-    
-    // Remove locked class and add unlocked class
-    calendarContainer.classList.remove('locked');
-    calendarContainer.classList.add('unlocked');
-    
-    // Set different Calendly URLs based on service
-    const calendlyUrls = {
-        'corte': 'https://calendly.com/alexander-hernandez-iest/corte-de-cabello-visagismo',
-        'asesoria-presencial': 'https://calendly.com/alexander-hernandez-iest/corte-asesoria-visagismo',
-        'asesoria-online': 'https://calendly.com/alexander-hernandez-iest/corte-asesoria-visagismo'
-    };
-    
-    iframe.src = calendlyUrls[service] || calendlyUrls['corte'];
-    
+    const scrollWrapper = calendarContainer.querySelector('.calendar-scroll-wrapper');
+    const lockOverlay = calendarContainer.querySelector('.calendar-lock-overlay');
+
+    if (calendarContainer) {
+        calendarContainer.classList.remove('locked');
+        calendarContainer.classList.add('unlocked');
+    }
+
+    // Show scroll wrapper and iframe
+    if (scrollWrapper) scrollWrapper.style.display = 'block';
+    if (iframe) {
+        iframe.style.display = 'block';
+            // Calendly URLs (kept inline where used to match original structure)
+            if (service === 'corte') {
+                iframe.src = 'https://calendly.com/alexander-hernandez-iest/corte-de-cabello-visagismo';
+            } else if (service === 'asesoria-presencial') {
+                iframe.src = 'https://calendly.com/alexander-hernandez-iest/corte-asesoria-visagismo';
+            } else {
+                iframe.src = 'https://calendly.com/alexander-hernandez-iest/corte-asesoria-visagismo';
+            }
+    }
+
+    if (lockOverlay) lockOverlay.style.display = 'none';
+
     // Scroll to calendar
-    calendarContainer.scrollIntoView({ behavior: 'smooth' });
-    
+    if (calendarContainer) calendarContainer.scrollIntoView({ behavior: 'smooth' });
+
     // Setup Calendly event detection
     setupCalendlyDetection();
+
+    // Show footer service switcher under the iframe (if exists)
+    const serviceSwitcher = document.getElementById('calendarServiceSwitcher');
+    const footerSelect = document.getElementById('changeServiceSelectFooter');
+    if (serviceSwitcher) {
+        // ensure it's unhidden and visible
+        serviceSwitcher.hidden = false;
+        serviceSwitcher.classList.add('visible');
+        if (footerSelect && selectedService) footerSelect.value = selectedService;
+    }
 }
 
 // Detect Calendly events and button clicks
 function setupCalendlyDetection() {
     console.log('🔍 Setting up Calendly detection...');
     setupCalendlyListener();
+}
+
+// Change service while calendar is open (footer switcher)
+function changeServiceFromFooter() {
+    const select = document.getElementById('changeServiceSelectFooter');
+    if (!select) return;
+    const service = select.value;
+    selectedService = service;
+    const iframe = document.getElementById('calendlyIframe');
+    if (iframe) {
+        if (service === 'corte') {
+            iframe.src = 'https://calendly.com/alexander-hernandez-iest/corte-de-cabello-visagismo';
+        } else if (service === 'asesoria-presencial') {
+            iframe.src = 'https://calendly.com/alexander-hernandez-iest/corte-asesoria-visagismo';
+        } else {
+            iframe.src = 'https://calendly.com/alexander-hernandez-iest/corte-asesoria-visagismo';
+        }
+        // restart detection to catch events for new url
+        setupCalendlyDetection();
+    }
+}
+
+function closeCalendarSwitcher() {
+    const serviceSwitcher = document.getElementById('calendarServiceSwitcher');
+    if (serviceSwitcher) {
+        serviceSwitcher.classList.remove('visible');
+        serviceSwitcher.hidden = true;
+    }
 }
 
 // Check if user already has a booking
@@ -1281,3 +1311,46 @@ updateFavicon();
 
 // Escuchar cambios en el tema del sistema
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateFavicon);
+
+// Change service from the calendar overlay select
+// Open the footer service switcher when user wants to change package from overlay
+// removed: overlay-open handler not needed — footer switcher appears when calendar opens
+
+// Show services grid (useful when user wants to re-pick visually)
+function showServicesFromOverlay() {
+    // Ensure services grid is visible and scroll to it
+    const servicesGrid = document.querySelector('.services-grid');
+    const paymentSelection = document.querySelector('.payment-selection');
+    if (paymentSelection) paymentSelection.style.display = 'block';
+    if (servicesGrid) {
+        servicesGrid.style.display = 'grid';
+        servicesGrid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } else {
+        // Fallback: scroll to reservar section
+        const reserva = document.getElementById('reservar');
+        if (reserva) reserva.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+}
+
+// Ensure overlay select is visible and interactive on load
+document.addEventListener('DOMContentLoaded', () => {
+    const calendarContainer = document.getElementById('calendarContainer');
+    if (!calendarContainer) return;
+    const lockOverlay = calendarContainer.querySelector('.calendar-lock-overlay');
+    const select = document.getElementById('changeServiceSelect');
+    if (lockOverlay && select) {
+        // Make sure overlay is displayed when locked
+        if (calendarContainer.classList.contains('locked')) {
+            lockOverlay.style.display = 'flex';
+        }
+
+        // Ensure select is visible and usable
+        select.style.display = 'block';
+        select.addEventListener('change', (e) => {
+            // optional: reflect selection elsewhere
+            console.log('Overlay service selected:', e.target.value);
+        });
+    } else {
+        console.log('Info: changeServiceSelect not found in DOM');
+    }
+});
