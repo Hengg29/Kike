@@ -1058,12 +1058,21 @@ function getServiceName(service) {
     return names[service] || 'Servicio';
 }
 
+// Variable global para el intervalo de corrección del enlace
+let calendlyUrlCorrectionInterval = null;
+
 function showCalendar(service) {
     // Hide payment selection or services grid (whichever exists)
     const paymentSelection = document.querySelector('.payment-selection');
     const servicesGrid = document.querySelector('.services-grid');
     if (paymentSelection) paymentSelection.style.display = 'none';
     if (servicesGrid) servicesGrid.style.display = 'none';
+
+    // Limpiar intervalo anterior si existe
+    if (calendlyUrlCorrectionInterval) {
+        clearInterval(calendlyUrlCorrectionInterval);
+        calendlyUrlCorrectionInterval = null;
+    }
 
     // Unlock calendar container and show iframe
     const calendarContainer = document.getElementById('calendarContainer');
@@ -1080,14 +1089,45 @@ function showCalendar(service) {
     if (scrollWrapper) scrollWrapper.style.display = 'block';
     if (iframe) {
         iframe.style.display = 'block';
-            // Calendly URLs (kept inline where used to match original structure)
-            if (service === 'corte') {
-                iframe.src = 'https://calendly.com/alexander-hernandez-iest/corte-de-cabello-visagismo';
-            } else if (service === 'asesoria-presencial') {
-                iframe.src = 'https://calendly.com/alexander-hernandez-iest/corte-asesoria-visagismo';
-            } else {
-                iframe.src = 'https://calendly.com/alexander-hernandez-iest/corte-asesoria-visagismo';
-            }
+        
+        // Calendly URLs - asegurar que el servicio 'corte' use el enlace correcto
+        const correctCorteUrl = 'https://calendly.com/henrygarza002/corte-de-cabello';
+        const calendlyUrl = (service === 'corte') 
+            ? correctCorteUrl
+            : (service === 'asesoria-presencial')
+            ? 'https://calendly.com/alexander-hernandez-iest/corte-asesoria-visagismo'
+            : 'https://calendly.com/alexander-hernandez-iest/corte-asesoria-visagismo';
+        
+        // Forzar el enlace correcto INMEDIATAMENTE
+        iframe.src = calendlyUrl;
+        console.log('✅ Configurando Calendly - Servicio:', service, 'URL:', calendlyUrl);
+        
+        // Si es 'corte', crear un intervalo que corrija el enlace cada 500ms durante los primeros 10 segundos
+        if (service === 'corte') {
+            let correctionCount = 0;
+            const maxCorrections = 20; // 20 correcciones x 500ms = 10 segundos
+            
+            calendlyUrlCorrectionInterval = setInterval(() => {
+                if (!iframe) {
+                    clearInterval(calendlyUrlCorrectionInterval);
+                    return;
+                }
+                
+                const currentSrc = iframe.src;
+                // Si el enlace no es el correcto, corregirlo
+                if (!currentSrc.includes('henrygarza002/corte-de-cabello')) {
+                    console.warn('⚠️ URL incorrecta detectada, corrigiendo a:', correctCorteUrl);
+                    iframe.src = correctCorteUrl;
+                }
+                
+                correctionCount++;
+                if (correctionCount >= maxCorrections) {
+                    clearInterval(calendlyUrlCorrectionInterval);
+                    calendlyUrlCorrectionInterval = null;
+                    console.log('✅ Período de corrección completado para CORTE');
+                }
+            }, 500);
+        }
     }
 
     if (lockOverlay) lockOverlay.style.display = 'none';
@@ -1121,15 +1161,54 @@ function changeServiceFromFooter() {
     if (!select) return;
     const service = select.value;
     selectedService = service;
+    
+    // Limpiar intervalo anterior si existe
+    if (calendlyUrlCorrectionInterval) {
+        clearInterval(calendlyUrlCorrectionInterval);
+        calendlyUrlCorrectionInterval = null;
+    }
+    
     const iframe = document.getElementById('calendlyIframe');
     if (iframe) {
+        const correctCorteUrl = 'https://calendly.com/henrygarza002/corte-de-cabello';
+        // Asegurar que el servicio 'corte' use el enlace correcto
+        const calendlyUrl = (service === 'corte') 
+            ? correctCorteUrl
+            : (service === 'asesoria-presencial')
+            ? 'https://calendly.com/alexander-hernandez-iest/corte-asesoria-visagismo'
+            : 'https://calendly.com/alexander-hernandez-iest/corte-asesoria-visagismo';
+        
+        // Forzar el enlace correcto INMEDIATAMENTE
+        iframe.src = calendlyUrl;
+        console.log('✅ Cambiando servicio - Servicio:', service, 'URL:', calendlyUrl);
+        
+        // Si es 'corte', crear un intervalo que corrija el enlace cada 500ms durante los primeros 10 segundos
         if (service === 'corte') {
-            iframe.src = 'https://calendly.com/alexander-hernandez-iest/corte-de-cabello-visagismo';
-        } else if (service === 'asesoria-presencial') {
-            iframe.src = 'https://calendly.com/alexander-hernandez-iest/corte-asesoria-visagismo';
-        } else {
-            iframe.src = 'https://calendly.com/alexander-hernandez-iest/corte-asesoria-visagismo';
+            let correctionCount = 0;
+            const maxCorrections = 20; // 20 correcciones x 500ms = 10 segundos
+            
+            calendlyUrlCorrectionInterval = setInterval(() => {
+                if (!iframe) {
+                    clearInterval(calendlyUrlCorrectionInterval);
+                    return;
+                }
+                
+                const currentSrc = iframe.src;
+                // Si el enlace no es el correcto, corregirlo
+                if (!currentSrc.includes('henrygarza002/corte-de-cabello')) {
+                    console.warn('⚠️ URL incorrecta detectada, corrigiendo a:', correctCorteUrl);
+                    iframe.src = correctCorteUrl;
+                }
+                
+                correctionCount++;
+                if (correctionCount >= maxCorrections) {
+                    clearInterval(calendlyUrlCorrectionInterval);
+                    calendlyUrlCorrectionInterval = null;
+                    console.log('✅ Período de corrección completado para CORTE');
+                }
+            }, 500);
         }
+        
         // restart detection to catch events for new url
         setupCalendlyDetection();
     }
@@ -1220,11 +1299,26 @@ function setupCalendlyListener() {
     // Method 2: Monitor iframe src changes
     let lastSrc = '';
     const iframe = document.getElementById('calendlyIframe');
+    const correctCorteUrl = 'https://calendly.com/henrygarza002/corte-de-cabello';
     
     const checkSrcChanges = () => {
+        if (!iframe) return;
         const currentSrc = iframe.src;
         if (currentSrc !== lastSrc && currentSrc !== '') {
             console.log('📝 Iframe src changed:', currentSrc);
+            
+            // Si el servicio seleccionado es 'corte' pero el enlace no es el correcto, corregirlo INMEDIATAMENTE
+            if (selectedService === 'corte') {
+                // Verificar si el enlace contiene el usuario correcto
+                if (!currentSrc.includes('henrygarza002/corte-de-cabello')) {
+                    console.warn('⚠️ URL incorrecta detectada para CORTE:', currentSrc);
+                    console.warn('🔧 Corrigiendo a:', correctCorteUrl);
+                    iframe.src = correctCorteUrl;
+                    lastSrc = correctCorteUrl;
+                    return;
+                }
+            }
+            
             lastSrc = currentSrc;
             
             // Check for success indicators in URL
