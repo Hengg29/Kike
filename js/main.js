@@ -97,13 +97,13 @@ document.addEventListener('DOMContentLoaded', () => {
 // Experimental hero-dimming/proximity logic removed per user request.
 // Keep hero content static; we only control video playback and the audio alert.
 
-// FAQ Toggle
+// Recomendaciones Toggle
 function toggleFAQ(element) {
     const faqItem = element.parentElement;
     const answer = faqItem.querySelector('.faq-answer');
     const isActive = faqItem.classList.contains('active');
 
-    // Close all other FAQ items
+    // Close all other recommendation items
     document.querySelectorAll('.faq-item').forEach(item => {
         item.classList.remove('active');
         item.querySelector('.faq-answer').classList.remove('active');
