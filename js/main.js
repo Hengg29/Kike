@@ -1091,12 +1091,12 @@ function showCalendar(service) {
         iframe.style.display = 'block';
         
         // Calendly URLs - asegurar que el servicio 'corte' use el enlace correcto
-        const correctCorteUrl = 'https://calendly.com/henrygarza002/corte-de-cabello';
+        const correctCorteUrl = 'https://calendly.com/enriquegarzza/corte-de-cabello';
         const calendlyUrl = (service === 'corte') 
             ? correctCorteUrl
             : (service === 'asesoria-presencial')
-            ? 'https://calendly.com/alexander-hernandez-iest/corte-asesoria-visagismo'
-            : 'https://calendly.com/alexander-hernandez-iest/corte-asesoria-visagismo';
+            ? 'https://calendly.com/enriquegarzza/asesoria-presencial'
+            : 'https://calendly.com/enriquegarzza/asesoria-de-visagismo-en-linea';
         
         // Forzar el enlace correcto INMEDIATAMENTE
         iframe.src = calendlyUrl;
@@ -1170,13 +1170,13 @@ function changeServiceFromFooter() {
     
     const iframe = document.getElementById('calendlyIframe');
     if (iframe) {
-        const correctCorteUrl = 'https://calendly.com/henrygarza002/corte-de-cabello';
+        const correctCorteUrl = 'https://calendly.com/enriquegarzza/corte-de-cabello';
         // Asegurar que el servicio 'corte' use el enlace correcto
         const calendlyUrl = (service === 'corte') 
             ? correctCorteUrl
             : (service === 'asesoria-presencial')
-            ? 'https://calendly.com/alexander-hernandez-iest/corte-asesoria-visagismo'
-            : 'https://calendly.com/alexander-hernandez-iest/corte-asesoria-visagismo';
+            ? 'https://calendly.com/enriquegarzza/asesoria-presencial'
+            : 'https://calendly.com/enriquegarzza/asesoria-de-visagismo-en-linea';
         
         // Forzar el enlace correcto INMEDIATAMENTE
         iframe.src = calendlyUrl;
@@ -1299,7 +1299,7 @@ function setupCalendlyListener() {
     // Method 2: Monitor iframe src changes
     let lastSrc = '';
     const iframe = document.getElementById('calendlyIframe');
-    const correctCorteUrl = 'https://calendly.com/henrygarza002/corte-de-cabello';
+    const correctCorteUrl = 'https://calendly.com/enriquegarzza/corte-de-cabello';
     
     const checkSrcChanges = () => {
         if (!iframe) return;
