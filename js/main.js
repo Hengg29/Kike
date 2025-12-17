@@ -1,5 +1,5 @@
- // Smooth scrolling for navigation links
- document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+// Smooth scrolling for navigation links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
         const target = document.querySelector(this.getAttribute('href'));
@@ -481,7 +481,7 @@ function displayAudioAlert() {
             const visibleVideo = getVisibleVideo();
             if (visibleVideo) {
                 visibleVideo.muted = false;
-                visibleVideo.play().catch(e => console.log('Error al reproducir:', e));
+                visibleVideo.play().catch(() => {});
             }
             isMuted = false;
             isPlaying = true;
@@ -946,7 +946,7 @@ function checkExistingBooking() {
             const booking = JSON.parse(bookingData);
             // Check if user already has a booking
             if (booking.hasBooking) {
-                console.log('🔒 User already has a booking, blocking calendar');
+                // User already has a booking, blocking calendar
                 blockCalendarAfterBooking();
                 return true;
             }
@@ -959,20 +959,15 @@ function checkExistingBooking() {
 
 // Check booking on page load
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('🔍 Page loaded, checking booking status...');
-    
     if (checkExistingBooking()) {
-        console.log('✅ Booking status checked');
+        // Booking status checked
     }
-    
     // Page loaded successfully
 });
 
 
 // Function to block calendar after successful booking
 function blockCalendarAfterBooking() {
-    console.log('🔒 Blocking calendar after booking...');
-    
     // Small delay to ensure DOM is ready
     setTimeout(() => {
         const calendarContainer = document.getElementById('calendarContainer');
@@ -1017,8 +1012,6 @@ function goToCalendly(service) {
 }
 
 function goToCalendlyDirect(service) {
-    console.log('🎯 Mostrando Calendly para servicio:', service);
-    
     // Guardar el servicio seleccionado
     selectedService = service;
     
@@ -1100,31 +1093,26 @@ function showCalendar(service) {
         
         // Forzar el enlace correcto INMEDIATAMENTE
         iframe.src = calendlyUrl;
-        console.log('✅ Configurando Calendly - Servicio:', service, 'URL:', calendlyUrl);
+        // Configurando Calendly - Servicio
         
         // Si es 'corte', crear un intervalo que corrija el enlace cada 500ms durante los primeros 10 segundos
         if (service === 'corte') {
             let correctionCount = 0;
             const maxCorrections = 20; // 20 correcciones x 500ms = 10 segundos
-            
             calendlyUrlCorrectionInterval = setInterval(() => {
                 if (!iframe) {
                     clearInterval(calendlyUrlCorrectionInterval);
                     return;
                 }
-                
                 const currentSrc = iframe.src;
                 // Si el enlace no es el correcto, corregirlo
                 if (!currentSrc.includes('henrygarza002/corte-de-cabello')) {
-                    console.warn('⚠️ URL incorrecta detectada, corrigiendo a:', correctCorteUrl);
                     iframe.src = correctCorteUrl;
                 }
-                
                 correctionCount++;
                 if (correctionCount >= maxCorrections) {
                     clearInterval(calendlyUrlCorrectionInterval);
                     calendlyUrlCorrectionInterval = null;
-                    console.log('✅ Período de corrección completado para CORTE');
                 }
             }, 500);
         }
@@ -1151,7 +1139,7 @@ function showCalendar(service) {
 
 // Detect Calendly events and button clicks
 function setupCalendlyDetection() {
-    console.log('🔍 Setting up Calendly detection...');
+    // Setting up Calendly detection
     setupCalendlyListener();
 }
 
@@ -1180,31 +1168,25 @@ function changeServiceFromFooter() {
         
         // Forzar el enlace correcto INMEDIATAMENTE
         iframe.src = calendlyUrl;
-        console.log('✅ Cambiando servicio - Servicio:', service, 'URL:', calendlyUrl);
+        // Cambiando servicio - Servicio
         
         // Si es 'corte', crear un intervalo que corrija el enlace cada 500ms durante los primeros 10 segundos
         if (service === 'corte') {
             let correctionCount = 0;
-            const maxCorrections = 20; // 20 correcciones x 500ms = 10 segundos
-            
+            const maxCorrections = 20;
             calendlyUrlCorrectionInterval = setInterval(() => {
                 if (!iframe) {
                     clearInterval(calendlyUrlCorrectionInterval);
                     return;
                 }
-                
                 const currentSrc = iframe.src;
-                // Si el enlace no es el correcto, corregirlo
                 if (!currentSrc.includes('henrygarza002/corte-de-cabello')) {
-                    console.warn('⚠️ URL incorrecta detectada, corrigiendo a:', correctCorteUrl);
                     iframe.src = correctCorteUrl;
                 }
-                
                 correctionCount++;
                 if (correctionCount >= maxCorrections) {
                     clearInterval(calendlyUrlCorrectionInterval);
                     calendlyUrlCorrectionInterval = null;
-                    console.log('✅ Período de corrección completado para CORTE');
                 }
             }, 500);
         }
@@ -1215,10 +1197,32 @@ function changeServiceFromFooter() {
 }
 
 function closeCalendarSwitcher() {
+    // Cerrar el modal del calendario
+    const calendarContainer = document.getElementById('calendarContainer');
+    const servicesGrid = document.querySelector('.services-grid');
+    const scrollWrapper = calendarContainer.querySelector('.calendar-scroll-wrapper');
+    const lockOverlay = calendarContainer.querySelector('.calendar-lock-overlay');
     const serviceSwitcher = document.getElementById('calendarServiceSwitcher');
+    const iframe = document.getElementById('calendlyIframe');
+
+    // Volver al estado locked
+    if (calendarContainer) {
+        calendarContainer.classList.remove('unlocked');
+        calendarContainer.classList.add('locked');
+    }
+
+    // Ocultar el iframe y mostrar el overlay de bloqueo
+    if (scrollWrapper) scrollWrapper.style.display = 'none';
+    if (iframe) iframe.style.display = 'none';
+    if (lockOverlay) lockOverlay.style.display = 'flex';
+
+    // Mostrar la cuadrícula de servicios nuevamente
+    if (servicesGrid) servicesGrid.style.display = 'grid';
+
+    // Ocultar el switcher
     if (serviceSwitcher) {
         serviceSwitcher.classList.remove('visible');
-        serviceSwitcher.hidden = true;
+        serviceSwitcher.style.display = 'none';
     }
 }
 
@@ -1243,49 +1247,43 @@ async function checkExistingBooking() {
         const result = await response.json();
         return result.has_booking || false;
     } catch (error) {
-        console.error('Error checking existing booking:', error);
+        // Error checking existing booking
         return false;
     }
 }
 
 // Setup Calendly event listener
 function setupCalendlyListener() {
-    console.log('🔍 Setting up ENHANCED Calendly detection...');
+    // Setting up ENHANCED Calendly detection
     
     let bookingDetected = false;
     
     // Method 1: Listen for postMessage events from Calendly
     window.addEventListener('message', function(event) {
         if (event.origin.includes('calendly.com') || event.origin.includes('app.calendly.com')) {
-            console.log('📅 Calendly message:', event.data);
-            
+            // Calendly message
             // Check for any event data
             if (event.data && typeof event.data === 'object') {
                 // Check for event type
                 if (event.data.type) {
-                    console.log('🎯 Event type:', event.data.type);
-                    
+                    // Event type
                     // Trigger on any significant Calendly event
                     if (event.data.type.includes('scheduled') || 
                         event.data.type.includes('submitted') || 
                         event.data.type.includes('created') ||
                         event.data.type.includes('confirmed') ||
                         event.data.type.includes('booked')) {
-                        console.log('🎉 Calendly booking event detected via postMessage!');
                         if (!bookingDetected) {
                             bookingDetected = true;
                             setTimeout(() => handleScheduleEvent(), 2000);
                         }
                     }
                 }
-                
                 // Check for event data structure
                 if (event.data.event) {
-                    console.log('🎯 Event data:', event.data.event);
                     if (event.data.event.includes('scheduled') || 
                         event.data.event.includes('booked') ||
                         event.data.event.includes('confirmed')) {
-                        console.log('🎉 Calendly booking event detected via event data!');
                         if (!bookingDetected) {
                             bookingDetected = true;
                             setTimeout(() => handleScheduleEvent(), 2000);
@@ -1305,14 +1303,11 @@ function setupCalendlyListener() {
         if (!iframe) return;
         const currentSrc = iframe.src;
         if (currentSrc !== lastSrc && currentSrc !== '') {
-            console.log('📝 Iframe src changed:', currentSrc);
-            
+            // Iframe src changed
             // Si el servicio seleccionado es 'corte' pero el enlace no es el correcto, corregirlo INMEDIATAMENTE
             if (selectedService === 'corte') {
                 // Verificar si el enlace contiene el usuario correcto
                 if (!currentSrc.includes('henrygarza002/corte-de-cabello')) {
-                    console.warn('⚠️ URL incorrecta detectada para CORTE:', currentSrc);
-                    console.warn('🔧 Corrigiendo a:', correctCorteUrl);
                     iframe.src = correctCorteUrl;
                     lastSrc = correctCorteUrl;
                     return;

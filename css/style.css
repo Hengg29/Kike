@@ -579,15 +579,18 @@ nav {
 
 /* Calendar service switcher (shown under iframe when unlocked) */
 .calendar-service-switcher {
-    margin: 18px auto 0;
+    margin: 24px auto 0;
     width: 100%;
-    max-width: 980px;
+    max-width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
-    padding: 12px 18px;
-    border-radius: 12px;
+    gap: 16px;
+    padding: 32px 40px;
+    border-radius: 0;
+    background: #fafafa;
+    border-top: 1px solid #e8e8e8;
+    border-bottom: 1px solid #e8e8e8;
 }
 .calendar-service-switcher.visible {
     display: flex !important;
@@ -597,16 +600,80 @@ nav {
     display: none !important;
     opacity: 0;
 }
+.calendar-service-switcher .change-service-label {
+    display: block;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 0;
+    font-size: 1.05rem;
+    width: 100%;
+    text-align: center;
+}
 .calendar-service-switcher .change-service-controls {
     width: 100%;
     display: flex;
-    gap: 10px;
+    flex-direction: row;
+    gap: 16px;
     align-items: center;
     justify-content: center;
 }
+
+.change-service-select {
+    flex: 0 1 380px;
+    padding: 12px 16px;
+    border-radius: 10px;
+    border: 1px solid #e0e0e0;
+    background: #fff;
+    font-size: 15px;
+    color: #222;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    min-width: 0;
+}
+
+.change-service-buttons {
+    display: flex;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+.btn-primary {
+    background: linear-gradient(90deg, #262626, #111);
+    color: #fff;
+    padding: 11px 28px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.btn-secondary {
+    background: #fff;
+    color: #111;
+    padding: 11px 24px;
+    border-radius: 10px;
+    border: 1px solid #e0e0e0;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 15px;
+}
+
+.calendar-footer-text {
+    margin-top: 8px;
+    margin-bottom: 0;
+    padding-top: 0;
+    border-top: none;
+    font-size: 0.95rem;
+    color: #888;
+    text-align: center;
+    font-weight: 400;
+    width: 100%;
+}
+
 @media (min-width:700px) {
-    .calendar-service-switcher { flex-direction: row; padding: 14px; }
-    .calendar-service-switcher .change-service-label { display: block; margin-right: 8px; }
+    .calendar-service-switcher { flex-direction: column; align-items: center; padding: 32px 40px; }
+    .calendar-service-switcher .change-service-label { display: block; margin-bottom: 0; text-align: center; }
 }
 
 .lock-message p {
