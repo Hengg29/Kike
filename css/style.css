@@ -585,8 +585,8 @@ nav {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 16px;
-    padding: 32px 40px;
+    gap: 12px;
+    padding: 20px 16px;
     border-radius: 0;
     background: #fafafa;
     border-top: 1px solid #e8e8e8;
@@ -605,47 +605,47 @@ nav {
     font-weight: 700;
     color: #1a1a1a;
     margin-bottom: 0;
-    font-size: 1.05rem;
+    font-size: 1rem;
     width: 100%;
     text-align: center;
 }
 .calendar-service-switcher .change-service-controls {
     width: 100%;
     display: flex;
-    flex-direction: row;
-    gap: 16px;
-    align-items: center;
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
     justify-content: center;
 }
 
 .change-service-select {
-    flex: 0 1 380px;
-    padding: 12px 16px;
+    width: 100%;
+    padding: 11px 14px;
     border-radius: 10px;
     border: 1px solid #e0e0e0;
     background: #fff;
-    font-size: 15px;
+    font-size: 14px;
     color: #222;
     box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-    min-width: 0;
 }
 
 .change-service-buttons {
     display: flex;
-    gap: 12px;
-    flex-shrink: 0;
+    gap: 10px;
+    flex-direction: column;
 }
 
 .btn-primary {
     background: linear-gradient(90deg, #262626, #111);
     color: #fff;
-    padding: 11px 28px;
+    padding: 11px 24px;
     border-radius: 10px;
     border: none;
     cursor: pointer;
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     font-weight: 600;
-    font-size: 15px;
+    font-size: 14px;
+    width: 100%;
 }
 
 .btn-secondary {
@@ -656,7 +656,8 @@ nav {
     border: 1px solid #e0e0e0;
     cursor: pointer;
     font-weight: 500;
-    font-size: 15px;
+    font-size: 14px;
+    width: 100%;
 }
 
 .calendar-footer-text {
@@ -664,16 +665,62 @@ nav {
     margin-bottom: 0;
     padding-top: 0;
     border-top: none;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     color: #888;
     text-align: center;
     font-weight: 400;
     width: 100%;
 }
 
-@media (min-width:700px) {
-    .calendar-service-switcher { flex-direction: column; align-items: center; padding: 32px 40px; }
-    .calendar-service-switcher .change-service-label { display: block; margin-bottom: 0; text-align: center; }
+@media (min-width: 600px) {
+    .calendar-service-switcher {
+        gap: 14px;
+        padding: 24px 28px;
+    }
+    
+    .calendar-service-switcher .change-service-controls {
+        flex-direction: row;
+        gap: 14px;
+        align-items: center;
+    }
+    
+    .change-service-select {
+        width: auto;
+        flex: 1 1 auto;
+        font-size: 15px;
+        padding: 12px 16px;
+    }
+    
+    .change-service-buttons {
+        flex-direction: row;
+        gap: 12px;
+    }
+    
+    .btn-primary,
+    .btn-secondary {
+        width: auto;
+        font-size: 15px;
+        padding: 11px 28px;
+    }
+    
+    .calendar-footer-text {
+        font-size: 0.95rem;
+    }
+}
+
+@media (min-width: 900px) {
+    .calendar-service-switcher {
+        gap: 16px;
+        padding: 32px 40px;
+    }
+    
+    .calendar-service-switcher .change-service-label {
+        font-size: 1.05rem;
+    }
+    
+    .change-service-select {
+        flex: 0 1 380px;
+    }
 }
 
 .lock-message p {
