@@ -1055,6 +1055,30 @@ function getServiceName(service) {
 let calendlyUrlCorrectionInterval = null;
 
 function showCalendar(service) {
+        // Mostrar loader tipo SweetAlert2 animado
+        Swal.fire({
+            title: 'Cargando Calendario',
+            html: `
+                <div class="audio-content" style="padding:0; display:flex; flex-direction:column; align-items:center;">
+                    <div class="audio-icon" style="font-size:2.5rem; margin-bottom:10px;">⏳</div>
+                    <p class="audio-text" style="font-size:1.1rem; color:#222;">Por favor espera mientras se carga el calendario de reservas...</p>
+                    <div class="swal2-loader-spinner" style="margin-top:18px;">
+                      <div class="swal2-loader-dot"></div>
+                      <div class="swal2-loader-dot"></div>
+                      <div class="swal2-loader-dot"></div>
+                    </div>
+                </div>
+            `,
+            showConfirmButton: false,
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            backdrop: 'rgba(255,255,255,0.85)',
+            customClass: {
+                popup: 'audio-recommendation-popup',
+                title: 'audio-title',
+                htmlContainer: 'audio-content',
+            }
+        });
     // Hide payment selection or services grid (whichever exists)
     const paymentSelection = document.querySelector('.payment-selection');
     const servicesGrid = document.querySelector('.services-grid');
@@ -1082,6 +1106,10 @@ function showCalendar(service) {
     if (scrollWrapper) scrollWrapper.style.display = 'block';
     if (iframe) {
         iframe.style.display = 'block';
+        // Ocultar SweetAlert loader cuando el iframe termine de cargar
+        iframe.onload = function() {
+            Swal.close();
+        };
         
         // Calendly URLs - asegurar que el servicio 'corte' use el enlace correcto
         const correctCorteUrl = 'https://calendly.com/enriquegarzza/corte-de-cabello';
