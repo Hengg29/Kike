@@ -1,518 +1,772 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Permissions-Policy" content="payment=(self)">
-    <title>Enrique Garza - Visagismo Profesional</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Aleo:ital,wght@0,100..900;1,100..900&family=Story+Script&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="icon" href="img/icon.png" id="favicon">
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <meta http-equiv="Permissions-Policy" content="payment=(self)">
+ <title>Enrique Garza - Visagismo Profesional</title>
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+ <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+ <link href="https://fonts.googleapis.com/css2?family=Aleo:ital,wght@0,100..900;1,100..900&family=Story+Script&display=swap" rel="stylesheet">
+ <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+ <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+ <link rel="stylesheet" href="css/style.css">
+ <link rel="icon" href="img/icon.png" id="favicon">
 
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <nav class="container">
-            <div class="logo">Enrique Garza</div>
-            <button class="hamburger" id="hamburger" aria-label="Menú">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#inicio">Inicio</a></li>
-                <li><a href="#servicios">Servicios</a></li>
-                <li><a href="#sobre-mi">Sobre Mí</a></li>
-                <li><a href="#resultados">Resultados</a></li>
-               
-            </ul>
-        </nav>
-    </header>
+ <!-- Header -->
+ <header>
+ <nav class="container">
+ <div class="logo">Enrique Garza</div>
+ <button class="hamburger" id="hamburger" aria-label="Menú">
+ <span></span>
+ <span></span>
+ <span></span>
+ </button>
+ <ul class="nav-links" id="navLinks">
+ <li><a href="#inicio">Inicio</a></li>
+ <li><a href="#sobre-mi">Sobre Mí</a></li>
+ <li><a href="#resultados">Resultados</a></li>
+ <li><a href="#referencias">Referencias</a></li>
+ </ul>
+ </nav>
+ </header>
 
-    <!-- Hero Section -->
-    <section id="inicio" class="hero">
-        <div class="hero-video" id="heroVideo">
-            <!-- Video Desktop -->
-            <video 
-                id="heroVideoElement"
-                class="hero-video-desktop"
-                muted 
-                loop 
-                playsinline
-                preload="auto">
-                <source src="video/horizontal.mp4" type="video/mp4">
-                Tu navegador no soporta videos HTML5.
-            </video>
-            
-            <!-- Video Mobile -->
-            <video 
-                id="heroVideoElementMobile"
-                class="hero-video-mobile"
-                muted 
-                loop 
-                playsinline
-                preload="auto">
-                <source src="video/vertical.mp4" type="video/mp4">
-                Tu navegador no soporta videos HTML5.
-            </video>
-        </div>
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-            <div class="hero-text-container">
-                <h1>Transforma tu <span class="highlight">Estilo</span> con <span class="highlight">Visagismo</span></h1>
-                <p>Descubre tu mejor versión con técnicas profesionales de visagismo que realzan tu belleza natural</p>
-            </div>
-            <a href="#reservar" class="cta-button">Reservar Cita</a>
-        </div>
-        <div class="hero-controls">
-            <button class="video-control-btn" id="muteBtn" onclick="toggleMute()">🔇</button>
-            <button class="video-control-btn play-btn" id="playBtn" onclick="togglePlay()">▶️</button>
-        </div>
-        <!-- Botón de mute flotante (se muestra al hacer scroll) -->
-        <button class="video-control-btn mute-btn-floating" id="muteBtnFloating" onclick="toggleMute()">🔇</button>
-    </section>
+ <!-- Hero Section -->
+ <section id="inicio" class="hero">
+ <div class="hero-video" id="heroVideo">
+ <!-- Video Desktop -->
+ <video 
+ id="heroVideoElement"
+ class="hero-video-desktop"
+ muted 
+ loop 
+ playsinline
+ preload="auto">
+ <source src="video/horizontal.mp4" type="video/mp4">
+ Tu navegador no soporta videos HTML5.
+ </video>
+ 
+ <!-- Video Mobile -->
+ <video 
+ id="heroVideoElementMobile"
+ class="hero-video-mobile"
+ muted 
+ loop 
+ playsinline
+ preload="auto">
+ <source src="video/vertical.mp4" type="video/mp4">
+ Tu navegador no soporta videos HTML5.
+ </video>
+ </div>
+ <div class="hero-overlay"></div>
+ <div class="hero-content">
+ <div class="hero-text-container">
+ <h1>Transforma tu <span class="highlight">Estilo</span> con <span class="highlight">Visagismo</span></h1>
+ <p>Descubre tu mejor versión con técnicas profesionales de visagismo que realzan tu belleza natural</p>
+ </div>
+ <a href="#reservar" class="cta-button">Reservar Cita</a>
+ </div>
+ <div class="hero-controls">
+ <button class="video-control-btn" id="muteBtn" onclick="toggleMute()">🔇</button>
+ <button class="video-control-btn play-btn" id="playBtn" onclick="togglePlay()">▶️</button>
+ </div>
+ <!-- Botón de mute flotante (se muestra al hacer scroll) -->
+ <button class="video-control-btn mute-btn-floating" id="muteBtnFloating" onclick="toggleMute()">🔇</button>
+ </section>
 
-    <!-- Payment Selection Section -->
-    <section id="reservar" class="calendar-section">
-        <div class="container">
-            <h2 class="section-title">Agenda tu Cita</h2>
-            <p class="section-subtitle">Selecciona tu servicio y agenda tu cita</p>
-            
-            <!-- Services grid (moved here to replace the simple payment cards) -->
-            <div class="services-grid">
-                <!-- Service 1 -->
-                <div class="service-card">
-                    <div class="service-card-content">
-                    <h3>Corte de Cabello</h3>
-                    <div class="service-price">$499 MXN</div>
-                    <div class="service-duration">Duración: 40 minutos</div>
-                    <p class="service-description">Servicio de mantenimiento diseñado para conservar la estructura y proporción creadas en tu asesoría previa. Se realizan ajustes precisos en longitud y forma para mantener la armonía del rostro y el estilo equilibrado.</p>
-                    <ul class="service-features">
-                        <li>Limpieza y definición de contornos</li>
-                        <li>Despunte y ajuste de volúmenes</li>
-                        <li>Estilizado final</li>
-                    </ul>
-                    <p class="service-ideal"><strong>Ideal para:</strong> Clientes que ya cuentan con su visagismo definido y desean mantener su imagen con precisión y coherencia estética.</p>
-                    </div>
-                    <button class="service-button" onclick="goToCalendlyDirect('corte')">Reservar Ahora</button>
-                </div>
+ <!-- Payment Selection Section -->
+ <section id="reservar" class="calendar-section">
+ <div class="container">
+ <h2 class="section-title">Agenda tu Cita</h2>
+ <p class="section-subtitle">Selecciona tu servicio y agenda tu cita</p>
+ 
+ <!-- Services grid (moved here to replace the simple payment cards) -->
+ <div class="services-grid">
+ <!-- Service 1 -->
+ <div class="service-card">
+ <div class="service-card-content">
+ <h3>Corte de Cabello</h3>
+ <div class="service-price">$499 MXN</div>
+ <div class="service-duration">Duración: 40 minutos</div>
+ <p class="service-description">Servicio de mantenimiento diseñado para conservar la estructura y proporción creadas en tu asesoría previa. Se realizan ajustes precisos en longitud y forma para mantener la armonía del rostro y el estilo equilibrado.</p>
+ <ul class="service-features">
+ <li>Limpieza y definición de contornos</li>
+ <li>Despunte y ajuste de volúmenes</li>
+ <li>Estilizado final</li>
+ </ul>
+ <p class="service-ideal"><strong>Ideal para:</strong> Clientes que ya cuentan con su visagismo definido y desean mantener su imagen con precisión y coherencia estética.</p>
+ </div>
+ <button class="service-button" onclick="goToCalendlyDirect('corte')">Reservar Ahora</button>
+ </div>
 
-                <!-- Service 2 -->
-                <div class="service-card">
-                    <div class="service-card-content">
-                    <h3>Asesoría Presencial – Primera Consulta</h3>
-                    <div class="service-price">$799 MXN</div>
-                    <div class="service-duration">Duración: 1 hora</div>
-                    <p class="service-description">Sesión práctica donde combinamos el análisis visagista con la ejecución del corte. En una hora exploramos tus proporciones, estilo de vida y tipo de cabello para definir una dirección estética clara y aplicarla directamente en el servicio.</p>
-                    <ul class="service-features">
-                        <li>Lavado capilar previo</li>
-                        <li>Asesoría de visagismo presencial</li>
-                        <li>Corte adaptado a tus proporciones y necesidades personales</li>
-                        <li>Recomendaciones básicas de productos y cuidado capilar</li>
-                    </ul>
-                    <p class="service-ideal"><strong>Ideal para:</strong> Personas que buscan un cambio inmediato y funcional, con una asesoría práctica enfocada en ejecutar el resultado durante la misma cita.</p>
-                    </div>
-                    <button class="service-button" onclick="goToCalendlyDirect('asesoria-presencial')">Reservar Ahora</button>
-                </div>
+ <!-- Service 2 -->
+ <div class="service-card">
+ <div class="service-card-content">
+ <h3>Asesoría Presencial – Primera Consulta</h3>
+ <div class="service-price">$799 MXN</div>
+ <div class="service-duration">Duración: 1 hora</div>
+ <p class="service-description">Sesión práctica donde combinamos el análisis visagista con la ejecución del corte. En una hora exploramos tus proporciones, estilo de vida y tipo de cabello para definir una dirección estética clara y aplicarla directamente en el servicio.</p>
+ <ul class="service-features">
+ <li>Lavado capilar previo</li>
+ <li>Asesoría de visagismo presencial</li>
+ <li>Corte adaptado a tus proporciones y necesidades personales</li>
+ <li>Recomendaciones básicas de productos y cuidado capilar</li>
+ </ul>
+ <p class="service-ideal"><strong>Ideal para:</strong> Personas que buscan un cambio inmediato y funcional, con una asesoría práctica enfocada en ejecutar el resultado durante la misma cita.</p>
+ </div>
+ <button class="service-button" onclick="goToCalendlyDirect('asesoria-presencial')">Reservar Ahora</button>
+ </div>
 
-                <!-- Service 3 -->
-                <div class="service-card popular">
-                    <div class="popular-badge">Más Completo</div>
-                    <div class="service-card-content">
-                    <h3>Asesoría de Visagismo en Línea</h3>
-                    <div class="service-price">$1,599 MXN</div>
-                    <div class="service-duration">Duración: 60 minutos</div>
-                    <p class="service-description">Sesión completamente teórica y visual dedicada a la concientización de tu comunicación estética. En esta charla analizamos tus proporciones, lenguaje corporal y objetivos personales para diseñar un estilo coherente con tu identidad.</p>
-                    <ul class="service-features">
-                        <li>Análisis estético y de comunicación visual</li>
-                        <li>Edición de tus fotografías en vivo</li>
-                        <li>Interpretación de tu estilo ideal</li>
-                        <li>Documento PDF con tu look sugerido y recomendaciones capilares</li>
-                        <li>Guía para solicitar el corte en cualquier barbería</li>
-                        <li>Referencias visuales y elementos de tu estética personal</li>
-                    </ul>
-                    <p class="service-ideal"><strong>Ideal para:</strong> Personas que desean comprender su imagen, visualizar su cambio antes de realizarlo y contar con una guía estética completa y profesional.</p>
-                    </div>
-                    <button class="service-button" onclick="goToCalendlyDirect('asesoria-online')">Reservar Ahora</button>
-                </div>
-            </div>
-            
-            <!-- Locked Calendar (shown with lock) -->
-            <div class="calendar-container locked" id="calendarContainer">
-                <div class="calendar-lock-overlay">
-                    <div class="lock-icon">🔒</div>
-                    <h3>Calendario Bloqueado</h3>
-                    <p>Selecciona un servicio para continuar</p>
-                    <div class="lock-message">
-                        <p>📅 Selecciona un servicio arriba para agendar tu cita</p>
-                        <!-- No inline controls here; footer switcher appears only after user opens Calendly -->
-                    </div>
-                
-                    <!-- Footer controls removed; use calendar footer switcher instead -->
-                </div>
-                <!-- Loader para Calendly -->
-                <div id="calendarLoader" class="calendar-loader">
-                  <div class="spinner">
-                    <div></div><div></div><div></div><div></div>
-                  </div>
-                  <span class="loader-text">Cargando calendario...</span>
-                </div>
-                <div class="calendar-scroll-wrapper" style="display: none;">
-                    <iframe id="calendlyIframe" src="" title="Reservar cita - Calendly"></iframe>
-                </div>
-                <!-- Service switcher shown when calendar is unlocked -->
-                <div id="calendarServiceSwitcher" class="calendar-service-switcher" style="display:none;">
-                    <label for="changeServiceSelectFooter" class="change-service-label">Cambiar paquete:</label>
-                    <div class="change-service-controls">
-                        <select id="changeServiceSelectFooter" class="change-service-select">
-                            <option value="corte">Corte de Cabello - $499</option>
-                            <option value="asesoria-presencial">Asesoría Presencial - $799</option>
-                            <option value="asesoria-online">Asesoría Online - $1,599</option>
-                        </select>
-                        <div class="change-service-buttons">
-                            <button id="changeServiceBtnFooter" onclick="changeServiceFromFooter()" class="btn-primary">Cambiar</button>
-                            <button id="closeCalendarBtn" onclick="closeCalendarSwitcher()" class="btn-secondary">Cerrar</button>
-                        </div>
-                    </div>
-                    <p class="calendar-footer-text">Administra tu plan actual y realiza cambios cuando lo necesites.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+ <!-- Service 3 -->
+ <div class="service-card popular">
+ <div class="popular-badge">Más Completo</div>
+ <div class="service-card-content">
+ <h3>Asesoría de Visagismo en Línea</h3>
+ <div class="service-price">$1,599 MXN</div>
+ <div class="service-duration">Duración: 60 minutos</div>
+ <p class="service-description">Sesión completamente teórica y visual dedicada a la concientización de tu comunicación estética. En esta charla analizamos tus proporciones, lenguaje corporal y objetivos personales para diseñar un estilo coherente con tu identidad.</p>
+ <ul class="service-features">
+ <li>Análisis estético y de comunicación visual</li>
+ <li>Edición de tus fotografías en vivo</li>
+ <li>Interpretación de tu estilo ideal</li>
+ <li>Documento PDF con tu look sugerido y recomendaciones capilares</li>
+ <li>Guía para solicitar el corte en cualquier barbería</li>
+ <li>Referencias visuales y elementos de tu estética personal</li>
+ </ul>
+ <p class="service-ideal"><strong>Ideal para:</strong> Personas que desean comprender su imagen, visualizar su cambio antes de realizarlo y contar con una guía estética completa y profesional.</p>
+ </div>
+ <button class="service-button" onclick="goToCalendlyDirect('asesoria-online')">Reservar Ahora</button>
+ </div>
+ </div>
+ 
+ <!-- Locked Calendar (shown with lock) -->
+ <div class="calendar-container locked" id="calendarContainer">
+ <div class="calendar-lock-overlay">
+ <div class="lock-icon">🔒</div>
+ <h3>Calendario Bloqueado</h3>
+ <p>Selecciona un servicio para continuar</p>
+ <div class="lock-message">
+ <p>📅 Selecciona un servicio arriba para agendar tu cita</p>
+ <!-- No inline controls here; footer switcher appears only after user opens Calendly -->
+ </div>
+ 
+ <!-- Footer controls removed; use calendar footer switcher instead -->
+ </div>
+ <div class="calendar-scroll-wrapper" style="display: none;">
+ <iframe id="calendlyIframe" src="" title="Reservar cita - Calendly"></iframe>
+ </div>
+ <!-- Service switcher shown when calendar is unlocked -->
+ <div id="calendarServiceSwitcher" class="calendar-service-switcher" style="display:none;">
+ <label for="changeServiceSelectFooter" class="change-service-label">Cambiar paquete:</label>
+ <div class="change-service-controls">
+ <select id="changeServiceSelectFooter" class="change-service-select">
+ <option value="corte">Corte de Cabello - $499</option>
+ <option value="asesoria-presencial">Asesoría Presencial - $799</option>
+ <option value="asesoria-online">Asesoría Online - $1,599</option>
+ </select>
+ <div class="change-service-buttons">
+ <button id="changeServiceBtnFooter" onclick="changeServiceFromFooter()" class="btn-primary">Cambiar</button>
+ <button id="closeCalendarBtn" onclick="closeCalendarSwitcher()" class="btn-secondary">Cerrar</button>
+ </div>
+ </div>
+ <p class="calendar-footer-text">Administra tu plan actual y realiza cambios cuando lo necesites.</p>
+ </div>
+ </div>
+ </div>
+ </section>
 
-    <!-- About Section -->
-    <section id="sobre-mi" class="about">
-        <div class="container">
-            <div class="about-content">
-                <div class="about-text">
-                    <h2>Sobre Enrique Garza</h2>
-                    <p>Soy Enrique Garza Morales, barbero y visagista especializado en el público masculino, creando estilos que se adaptan a la esencia, proporciones y momento de vida de cada persona.</p>
-                    <p>He estudiado con maestros de talla internacional en España, Londres, Los Ángeles, Denver, Monterrey, Chile y Brasil, además de contar con una maestría en estética capilar, diagnósticos y tratamientos por Escneca (España).</p>
-                    <p>Mi diferencia está en aplicar técnicas internacionales con un enfoque en visagismo, lo que permite lograr cortes con estructura, equilibrio y propósito, más allá de solo cambiar el cabello. Mi agenda suele llenarse con uno o dos meses de anticipación, y he aparecido en medios como Chic Magazine y prensa local por ser pionero en llevar el visagismo a Tampico.</p>
-                    <p>Mi objetivo es que cada asesoría te brinde seguridad, confianza y claridad sobre tu imagen, para que logres proyectar exactamente lo que quieres en tu vida personal y profesional.</p>
-                    
-                    <div class="stats">
-                        <div class="stat">
-                            <div class="stat-number">5</div>
-                            <div class="stat-label">Años de Experiencia</div>
-                        </div>
-                        <div class="stat">
-                            <div class="stat-number">10,000+</div>
-                            <div class="stat-label">Clientes Satisfechos</div>
-                        </div>
-                        <div class="stat">
-                            <div class="stat-number">100%</div>
-                            <div class="stat-label">Satisfacción</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="about-image">
-                    <img src="img/kikeguapo.jpeg" alt="Enrique Garza">
-                </div>
-            </div>
-        </div>
-    </section>
+ <!-- About Section -->
+ <section id="sobre-mi" class="about">
+ <div class="container">
+ <div class="about-content">
+ <div class="about-text">
+ <h2>Sobre Enrique Garza</h2>
+ <p>Soy Enrique Garza Morales, barbero y visagista especializado en el público masculino, creando estilos que se adaptan a la esencia, proporciones y momento de vida de cada persona.</p>
+ <p>He estudiado con maestros de talla internacional en España, Londres, Los Ángeles, Denver, Monterrey, Chile y Brasil, además de contar con una maestría en estética capilar, diagnósticos y tratamientos por Escneca (España).</p>
+ <p>Mi diferencia está en aplicar técnicas internacionales con un enfoque en visagismo, lo que permite lograr cortes con estructura, equilibrio y propósito, más allá de solo cambiar el cabello. Mi agenda suele llenarse con uno o dos meses de anticipación, y he aparecido en medios como Chic Magazine y prensa local por ser pionero en llevar el visagismo a Tampico.</p>
+ <p>Mi objetivo es que cada asesoría te brinde seguridad, confianza y claridad sobre tu imagen, para que logres proyectar exactamente lo que quieres en tu vida personal y profesional.</p>
+ 
+ <div class="stats">
+ <div class="stat">
+ <div class="stat-number">5</div>
+ <div class="stat-label">Años de Experiencia</div>
+ </div>
+ <div class="stat">
+ <div class="stat-number">10,000+</div>
+ <div class="stat-label">Clientes Satisfechos</div>
+ </div>
+ <div class="stat">
+ <div class="stat-number">100%</div>
+ <div class="stat-label">Satisfacción</div>
+ </div>
+ </div>
+ </div>
+ <div class="about-image">
+ <img src="img/kikeguapo.jpeg" alt="Enrique Garza">
+ </div>
+ </div>
+ </div>
+ </section>
 
-    <!-- Services moved up to the reservation section. Original section removed. -->
+ <!-- Services moved up to the reservation section. Original section removed. -->
 
-    <!-- Before After Section -->
-    <section id="resultados" class="before-after">
-        <div class="container">
-            <h2 class="section-title">Resultados de Antes y Después</h2>
-            <p class="section-subtitle">Descubre las transformaciones que han cambiado vidas</p>
-            
-            <div class="carousel-container">
-                <div class="carousel-wrapper" id="carouselWrapper">
-                    <!-- Slide 1 -->
-                    <div class="carousel-slide">
-                        <div class="before-after-item">
-                            <div class="image-container">
-                                <span class="before-after-badge antes">ANTES</span>
-                                <span class="before-after-badge despues">DESPUÉS</span>
-                                <img src="Imagenes/Antes 1.png" alt="Antes 1" class="image-before">
-                                <img src="Imagenes/Despues 1.png" alt="Después 1" class="image-after">
-                            </div>
-                            <div class="before-after-content">
-                                <h4>Transformación 1</h4>
-                                <p>Pasa el cursor para ver el resultado</p>
-                            </div>
-                        </div>
-                    </div>
+ <!-- Before After Section -->
+ <section id="resultados" class="before-after">
+ <div class="container">
+ <h2 class="section-title">Resultados de Antes y Después</h2>
+ <p class="section-subtitle">Descubre las transformaciones que han cambiado vidas</p>
+ 
+ <div class="carousel-container">
+ <div class="carousel-wrapper" id="carouselWrapper">
+ <!-- Slide 1 -->
+ <div class="carousel-slide">
+ <div class="before-after-item">
+ <div class="image-container">
+ <span class="before-after-badge antes">ANTES</span>
+ <span class="before-after-badge despues">DESPUÉS</span>
+ <img src="Imagenes/Antes 1.png" alt="Antes 1" class="image-before">
+ <img src="Imagenes/Despues 1.png" alt="Después 1" class="image-after">
+ </div>
+ <div class="before-after-content">
+ <h4>Transformación 1</h4>
+ <p>Pasa el cursor para ver el resultado</p>
+ </div>
+ </div>
+ </div>
 
-                    <!-- Slide 2 -->
-                    <div class="carousel-slide">
-                        <div class="before-after-item">
-                            <div class="image-container">
-                                <span class="before-after-badge antes">ANTES</span>
-                                <span class="before-after-badge despues">DESPUÉS</span>
-                                <img src="Imagenes/Antes 2.png" alt="Antes 2" class="image-before">
-                                <img src="Imagenes/Despues 2.png" alt="Después 2" class="image-after">
-                            </div>
-                            <div class="before-after-content">
-                                <h4>Transformación 2</h4>
-                                <p>Pasa el cursor para ver el resultado</p>
-                            </div>
-                        </div>
-                    </div>
+ <!-- Slide 2 -->
+ <div class="carousel-slide">
+ <div class="before-after-item">
+ <div class="image-container">
+ <span class="before-after-badge antes">ANTES</span>
+ <span class="before-after-badge despues">DESPUÉS</span>
+ <img src="Imagenes/Antes 2.png" alt="Antes 2" class="image-before">
+ <img src="Imagenes/Despues 2.png" alt="Después 2" class="image-after">
+ </div>
+ <div class="before-after-content">
+ <h4>Transformación 2</h4>
+ <p>Pasa el cursor para ver el resultado</p>
+ </div>
+ </div>
+ </div>
 
-                    <!-- Slide 3 -->
-                    <div class="carousel-slide">
-                        <div class="before-after-item">
-                            <div class="image-container">
-                                <span class="before-after-badge antes">ANTES</span>
-                                <span class="before-after-badge despues">DESPUÉS</span>
-                                <img src="Imagenes/Antes 3.png" alt="Antes 3" class="image-before">
-                                <img src="Imagenes/Despues 3.png" alt="Después 3" class="image-after">
-                            </div>
-                            <div class="before-after-content">
-                                <h4>Transformación 3</h4>
-                                <p>Pasa el cursor para ver el resultado</p>
-                            </div>
-                        </div>
-                    </div>
+ <!-- Slide 3 -->
+ <div class="carousel-slide">
+ <div class="before-after-item">
+ <div class="image-container">
+ <span class="before-after-badge antes">ANTES</span>
+ <span class="before-after-badge despues">DESPUÉS</span>
+ <img src="Imagenes/Antes 3.png" alt="Antes 3" class="image-before">
+ <img src="Imagenes/Despues 3.png" alt="Después 3" class="image-after">
+ </div>
+ <div class="before-after-content">
+ <h4>Transformación 3</h4>
+ <p>Pasa el cursor para ver el resultado</p>
+ </div>
+ </div>
+ </div>
 
-                    <!-- Slide 4 -->
-                    <div class="carousel-slide">
-                        <div class="before-after-item">
-                            <div class="image-container">
-                                <span class="before-after-badge antes">ANTES</span>
-                                <span class="before-after-badge despues">DESPUÉS</span>
-                                <img src="Imagenes/Antes 4.png" alt="Antes 4" class="image-before">
-                                <img src="Imagenes/Despues 4.png" alt="Después 4" class="image-after">
-                            </div>
-                            <div class="before-after-content">
-                                <h4>Transformación 4</h4>
-                                <p>Pasa el cursor para ver el resultado</p>
-                            </div>
-                        </div>
-                    </div>
+ <!-- Slide 4 -->
+ <div class="carousel-slide">
+ <div class="before-after-item">
+ <div class="image-container">
+ <span class="before-after-badge antes">ANTES</span>
+ <span class="before-after-badge despues">DESPUÉS</span>
+ <img src="Imagenes/Antes 4.png" alt="Antes 4" class="image-before">
+ <img src="Imagenes/Despues 4.png" alt="Después 4" class="image-after">
+ </div>
+ <div class="before-after-content">
+ <h4>Transformación 4</h4>
+ <p>Pasa el cursor para ver el resultado</p>
+ </div>
+ </div>
+ </div>
 
-                    <!-- Slide 5 -->
-                    <div class="carousel-slide">
-                        <div class="before-after-item">
-                            <div class="image-container">
-                                <span class="before-after-badge antes">ANTES</span>
-                                <span class="before-after-badge despues">DESPUÉS</span>
-                                <img src="Imagenes/Antes 5.png" alt="Antes 5" class="image-before">
-                                <img src="Imagenes/Despues 5.png" alt="Después 5" class="image-after">
-                            </div>
-                            <div class="before-after-content">
-                                <h4>Transformación 5</h4>
-                                <p>Pasa el cursor para ver el resultado</p>
-                            </div>
-                        </div>
-                    </div>
+ <!-- Slide 5 -->
+ <div class="carousel-slide">
+ <div class="before-after-item">
+ <div class="image-container">
+ <span class="before-after-badge antes">ANTES</span>
+ <span class="before-after-badge despues">DESPUÉS</span>
+ <img src="Imagenes/Antes 5.png" alt="Antes 5" class="image-before">
+ <img src="Imagenes/Despues 5.png" alt="Después 5" class="image-after">
+ </div>
+ <div class="before-after-content">
+ <h4>Transformación 5</h4>
+ <p>Pasa el cursor para ver el resultado</p>
+ </div>
+ </div>
+ </div>
 
-                    <!-- Slide 6 -->
-                    <div class="carousel-slide">
-                        <div class="before-after-item">
-                            <div class="image-container">
-                                <span class="before-after-badge antes">ANTES</span>
-                                <span class="before-after-badge despues">DESPUÉS</span>
-                                <img src="Imagenes/Antes 6.png" alt="Antes 6" class="image-before">
-                                <img src="Imagenes/Despues 6.png" alt="Después 6" class="image-after">
-                            </div>
-                            <div class="before-after-content">
-                                <h4>Transformación 6</h4>
-                                <p>Pasa el cursor para ver el resultado</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+ <!-- Slide 6 -->
+ <div class="carousel-slide">
+ <div class="before-after-item">
+ <div class="image-container">
+ <span class="before-after-badge antes">ANTES</span>
+ <span class="before-after-badge despues">DESPUÉS</span>
+ <img src="Imagenes/Antes 6.png" alt="Antes 6" class="image-before">
+ <img src="Imagenes/Despues 6.png" alt="Después 6" class="image-after">
+ </div>
+ <div class="before-after-content">
+ <h4>Transformación 6</h4>
+ <p>Pasa el cursor para ver el resultado</p>
+ </div>
+ </div>
+ </div>
+ </div>
 
-                <!-- Navigation -->
-                <div class="carousel-nav">
-                    <button class="carousel-btn" id="prevBtn" aria-label="Anterior">‹</button>
-                    <div class="carousel-dots" id="carouselDots"></div>
-                    <button class="carousel-btn" id="nextBtn" aria-label="Siguiente">›</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-  
-
-    <!-- Testimonials Section -->
-    <section class="testimonials">
-        <div class="container">
-            <h2 class="section-title">Lo que Dicen Nuestros Clientes</h2>
-            <p class="section-subtitle">Testimonios reales de transformaciones exitosas</p>
-            
-            <div class="testimonials-grid">
-                <div class="testimonial-card">
-                    <div class="testimonial-stars">
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                    </div>
-                    <p class="testimonial-text">
-                        "Enrique transformó completamente mi look. Su análisis de visagismo fue increíblemente preciso y el resultado superó mis expectativas. Definitivamente recomiendo sus servicios."
-                    </p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">M</div>
-                        <div class="author-info">
-                            <h4>María González</h4>
-                            <p>Cliente desde 2023</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="testimonial-card">
-                    <div class="testimonial-stars">
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                    </div>
-                    <p class="testimonial-text">
-                        "La asesoría online fue perfecta. Enrique me ayudó a encontrar mi estilo ideal sin salir de casa. Su conocimiento en visagismo es excepcional."
-                    </p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">A</div>
-                        <div class="author-info">
-                            <h4>Ana Rodríguez</h4>
-                            <p>Asesoría Online</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="testimonial-card">
-                    <div class="testimonial-stars">
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                    </div>
-                    <p class="testimonial-text">
-                        "Profesional, detallado y con un ojo increíble para el estilo. Enrique no solo corta cabello, crea arte. Mi confianza se disparó después de mi transformación."
-                    </p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">C</div>
-                        <div class="author-info">
-                            <h4>Carlos Mendoza</h4>
-                            <p>Transformación Completa</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="testimonial-card">
-                    <div class="testimonial-stars">
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                    </div>
-                    <p class="testimonial-text">
-                        "Increíble experiencia. Enrique me enseñó cómo mantener mi nuevo look y me dio consejos personalizados. Su seguimiento por WhatsApp es un detalle que marca la diferencia."
-                    </p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">L</div>
-                        <div class="author-info">
-                            <h4>Laura Sánchez</h4>
-                            <p>Paquete Completo</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="testimonial-card">
-                    <div class="testimonial-stars">
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                    </div>
-                    <p class="testimonial-text">
-                        "Después de años buscando el estilo perfecto, Enrique lo encontró en una sola sesión. Su expertise en visagismo es impresionante. ¡Altamente recomendado!"
-                    </p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">R</div>
-                        <div class="author-info">
-                            <h4>Roberto Torres</h4>
-                            <p>Cliente desde 2022</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="testimonial-card">
-                    <div class="testimonial-stars">
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                    </div>
-                    <p class="testimonial-text">
-                        "La atención al detalle y el cuidado que Enrique pone en cada cliente es excepcional. No solo cambió mi look, cambió mi perspectiva sobre el estilo personal."
-                    </p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">S</div>
-                        <div class="author-info">
-                            <h4>Sofia Herrera</h4>
-                            <p>Transformación Profesional</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>Contacto</h3>
-                    <p>📍 Ubicación: Calle puebla No. 100 Col. Guadalupe</p>
-                    <p>📞 Teléfono: 833 231 2418</p>
-                </div>
-                <div class="footer-section">
-                    <h3>Servicios</h3>
-                    <a href="#servicios">Corte de Cabello</a>
-                    <a href="#servicios">Asesoría Presencial</a>
-                    <a href="#servicios">Asesoría Online</a>
-                </div>
-                <div class="footer-section">
-                    <h3>Síguenos</h3>
-                    <div class="social-icons">
-                        <a href="https://www.instagram.com/soyenriquegarzza/" target="_blank" class="social-icon instagram">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="https://www.tiktok.com/@kikegarzza" target="_blank" class="social-icon tiktok">
-                            <i class="fab fa-tiktok"></i>
-                        </a>
-                        <a href="https://wa.me/528332312418?text=Hola%20quisiera%20más%20información" target="_blank" class="social-icon whatsapp">
-                            <i class="fab fa-whatsapp"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 Enrique Garza - Visagismo Profesional. Todos los derechos reservados.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Video Modal -->
-    <div id="videoModal" class="video-modal">
-        <div class="video-modal-content">
-            <span class="close-video" onclick="closeVideoModal()">&times;</span>
-            <iframe id="videoFrame" src="" frameborder="0" allowfullscreen></iframe>
-        </div>
-    </div>
+ <!-- Navigation -->
+ <div class="carousel-nav">
+ <button class="carousel-btn" id="prevBtn" aria-label="Anterior">‹</button>
+ <div class="carousel-dots" id="carouselDots"></div>
+ <button class="carousel-btn" id="nextBtn" aria-label="Siguiente">›</button>
+ </div>
+ </div>
+ </div>
+ </section>
 
 
-    <script src="js/main.js"></script>
-    
+ <section id="referencias"class="testimonials">
+ <div class="container">
+ <h2 class="section-title">Lo que Dicen Nuestros Clientes</h2>
+ <p class="section-subtitle">Testimonios reales de transformaciones exitosas</p>
+ 
+ <div class="testimonials-grid">
+ <div class="testimonial-card">
+ <div class="testimonial-logo-watermark">
+ <img src="img/Icon-Dark.png" alt="EG Logo">
+ </div>
+ <div class="testimonial-stars">
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ </div>
+ <p class="testimonial-text">
+ "Excelente servicio y atención personalizada."
+ </p>
+ </div>
+
+ <div class="testimonial-card">
+ <div class="testimonial-logo-watermark">
+ <img src="img/Icon-Dark.png" alt="EG Logo">
+ </div>
+ <div class="testimonial-stars">
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ </div>
+ <p class="testimonial-text">
+ "El mejor corte que me han hecho."
+ </p>
+ </div>
+
+ <div class="testimonial-card">
+ <div class="testimonial-logo-watermark">
+ <img src="img/Icon-Dark.png" alt="EG Logo">
+ </div>
+ <div class="testimonial-stars">
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ </div>
+ <p class="testimonial-text">
+ "Entiende exactamente lo que pides y te asesora muy bien."
+ </p>
+ </div>
+
+ <div class="testimonial-card">
+ <div class="testimonial-logo-watermark">
+ <img src="img/Icon-Dark.png" alt="EG Logo">
+ </div>
+ <div class="testimonial-stars">
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ </div>
+ <p class="testimonial-text">
+ "Nunca me había sentido tan cómodo y seguro con mi cabello."
+ </p>
+ </div>
+
+ <div class="testimonial-card">
+ <div class="testimonial-logo-watermark">
+ <img src="img/Icon-Dark.png" alt="EG Logo">
+ </div>
+ <div class="testimonial-stars">
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ </div>
+ <p class="testimonial-text">
+ "Gran conocimiento de tendencias y armonía con el rostro."
+ </p>
+ </div>
+
+ <div class="testimonial-card">
+ <div class="testimonial-logo-watermark">
+ <img src="img/Icon-Dark.png" alt="EG Logo">
+ </div>
+ <div class="testimonial-stars">
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ </div>
+ <p class="testimonial-text">
+ "Resultados de 10/10, definitivamente regreso."
+ </p>
+ </div>
+
+ <div class="testimonial-card">
+ <div class="testimonial-logo-watermark">
+ <img src="img/Icon-Dark.png" alt="EG Logo">
+ </div>
+ <div class="testimonial-stars">
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ </div>
+ <p class="testimonial-text">
+ "Muy buen trato, buena plática y ambiente."
+ </p>
+ </div>
+
+ <div class="testimonial-card">
+ <div class="testimonial-logo-watermark">
+ <img src="img/Icon-Dark.png" alt="EG Logo">
+ </div>
+ <div class="testimonial-stars">
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ </div>
+ <p class="testimonial-text">
+ "Confianza total en sus recomendaciones."
+ </p>
+ </div>
+
+ <div class="testimonial-card">
+ <div class="testimonial-logo-watermark">
+ <img src="img/Icon-Dark.png" alt="EG Logo">
+ </div>
+ <div class="testimonial-stars">
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ </div>
+ <p class="testimonial-text">
+ "Arregló la estructura de mi cabello y ahora crece mejor."
+ </p>
+ </div>
+
+ <div class="testimonial-card">
+ <div class="testimonial-logo-watermark">
+ <img src="img/Icon-Dark.png" alt="EG Logo">
+ </div>
+ <div class="testimonial-stars">
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ </div>
+ <p class="testimonial-text">
+ "El corte sigue viéndose bien incluso semanas después."
+ </p>
+ </div>
+
+ <div class="testimonial-card">
+ <div class="testimonial-logo-watermark">
+ <img src="img/Icon-Dark.png" alt="EG Logo">
+ </div>
+ <div class="testimonial-stars">
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ </div>
+ <p class="testimonial-text">
+ "Un trato diferente, se nota el interés en que el cliente salga satisfecho."
+ </p>
+ </div>
+
+ <div class="testimonial-card">
+ <div class="testimonial-logo-watermark">
+ <img src="img/Icon-Dark.png" alt="EG Logo">
+ </div>
+ <div class="testimonial-stars">
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ </div>
+ <p class="testimonial-text">
+ "Excelente trabajo y productos bien recomendados."
+ </p>
+ </div>
+
+ <div class="testimonial-card">
+ <div class="testimonial-logo-watermark">
+ <img src="img/Icon-Dark.png" alt="EG Logo">
+ </div>
+ <div class="testimonial-stars">
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ </div>
+ <p class="testimonial-text">
+ "Siempre que me atiende salgo con una vibra diferente."
+ </p>
+ </div>
+
+ <div class="testimonial-card">
+ <div class="testimonial-logo-watermark">
+ <img src="img/Icon-Dark.png" alt="EG Logo">
+ </div>
+ <div class="testimonial-stars">
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ </div>
+ <p class="testimonial-text">
+ "Me encantó el resultado, justo lo que estaba buscando."
+ </p>
+ </div>
+
+ <div class="testimonial-card">
+ <div class="testimonial-logo-watermark">
+ <img src="img/Icon-Dark.png" alt="EG Logo">
+ </div>
+ <div class="testimonial-stars">
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ </div>
+ <p class="testimonial-text">
+ "Le gustó a todos, incluso a personas a las que normalmente no les agradan mis cortes."
+ </p>
+ </div>
+
+ <div class="testimonial-card">
+ <div class="testimonial-logo-watermark">
+ <img src="img/Icon-Dark.png" alt="EG Logo">
+ </div>
+ <div class="testimonial-stars">
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ </div>
+ <p class="testimonial-text">
+ "El corte quedó brutal y no necesito usar producto para acomodarlo."
+ </p>
+ </div>
+
+ <div class="testimonial-card">
+ <div class="testimonial-logo-watermark">
+ <img src="img/Icon-Dark.png" alt="EG Logo">
+ </div>
+ <div class="testimonial-stars">
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ </div>
+ <p class="testimonial-text">
+ "Gran talento y atención al detalle."
+ </p>
+ </div>
+
+ <div class="testimonial-card">
+ <div class="testimonial-logo-watermark">
+ <img src="img/Icon-Dark.png" alt="EG Logo">
+ </div>
+ <div class="testimonial-stars">
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ </div>
+ <p class="testimonial-text">
+ "He recibido muchos halagos, el estilo me hizo sentir mejor que nunca."
+ </p>
+ </div>
+
+ <div class="testimonial-card">
+ <div class="testimonial-logo-watermark">
+ <img src="img/Icon-Dark.png" alt="EG Logo">
+ </div>
+ <div class="testimonial-stars">
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ </div>
+ <p class="testimonial-text">
+ "Muy contento con mi corte, me siento súper bien con él."
+ </p>
+ </div>
+
+ <div class="testimonial-card">
+ <div class="testimonial-logo-watermark">
+ <img src="img/Icon-Dark.png" alt="EG Logo">
+ </div>
+ <div class="testimonial-stars">
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ </div>
+ <p class="testimonial-text">
+ "Nunca había salido 100% convencido de un corte hasta ahora."
+ </p>
+ </div>
+
+ <div class="testimonial-card">
+ <div class="testimonial-logo-watermark">
+ <img src="img/Icon-Dark.png" alt="EG Logo">
+ </div>
+ <div class="testimonial-stars">
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ </div>
+ <p class="testimonial-text">
+ "El mejor corte que me han hecho en toda mi vida."
+ </p>
+ </div>
+
+ <div class="testimonial-card">
+ <div class="testimonial-logo-watermark">
+ <img src="img/Icon-Dark.png" alt="EG Logo">
+ </div>
+ <div class="testimonial-stars">
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ </div>
+ <p class="testimonial-text">
+ "Me ganaste como cliente, definitivamente regreso."
+ </p>
+ </div>
+
+ <div class="testimonial-card">
+ <div class="testimonial-logo-watermark">
+ <img src="img/Icon-Dark.png" alt="EG Logo">
+ </div>
+ <div class="testimonial-stars">
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ </div>
+ <p class="testimonial-text">
+ "Definitivamente una experiencia incomparable, espera mi regreso."
+ </p>
+ </div>
+
+ <div class="testimonial-card">
+ <div class="testimonial-logo-watermark">
+ <img src="img/Icon-Dark.png" alt="EG Logo">
+ </div>
+ <div class="testimonial-stars">
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ <span class="star">★</span>
+ </div>
+ <p class="testimonial-text">
+ "Excelente trabajo, resultado impecable."
+ </p>
+ </div>
+ </div>
+ </div>
+ </section>
+
+ <!-- Footer -->
+ <footer>
+ <div class="container">
+ <div class="footer-content">
+ <div class="footer-section">
+ <h3>Contacto</h3>
+ <p>📍 Ubicación: Calle puebla No. 100 Col. Guadalupe</p>
+ <p>📞 Teléfono: 833 231 2418</p>
+ </div>
+ <div class="footer-section">
+ <h3>Servicios</h3>
+ <a href="#servicios">Corte de Cabello</a>
+ <a href="#servicios">Asesoría Presencial</a>
+ <a href="#servicios">Asesoría Online</a>
+ </div>
+ <div class="footer-section">
+ <h3>Síguenos</h3>
+ <div class="social-icons">
+ <a href="https://www.instagram.com/soyenriquegarzza/" target="_blank" class="social-icon instagram">
+ <i class="fab fa-instagram"></i>
+ </a>
+ <a href="https://www.tiktok.com/@kikegarzza" target="_blank" class="social-icon tiktok">
+ <i class="fab fa-tiktok"></i>
+ </a>
+ <a href="https://wa.me/528332312418?text=Hola%20quisiera%20más%20información" target="_blank" class="social-icon whatsapp">
+ <i class="fab fa-whatsapp"></i>
+ </a>
+ </div>
+ </div>
+ </div>
+ <div class="footer-bottom">
+ <p>&copy; 2024 Enrique Garza - Visagismo Profesional. Todos los derechos reservados.</p>
+ </div>
+ </div>
+ </footer>
+
+ <!-- Video Modal -->
+ <div id="videoModal" class="video-modal">
+ <div class="video-modal-content">
+ <span class="close-video" onclick="closeVideoModal()">&times;</span>
+ <iframe id="videoFrame" src="" frameborder="0" allowfullscreen></iframe>
+ </div>
+ </div>
+
+
+ <script src="js/main.js"></script>
+ 
 </body>
 </html>
